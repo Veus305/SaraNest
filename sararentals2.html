@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SARA RENTALS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Raleway:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --aqua:#00e5c8;--gold:#f5c842;--amber:#e07b00;
+      --dark:#001a20;--glass:rgba(0,220,220,0.07);
+      --text:#e0faff;--nav-bg:rgba(0,20,30,0.88);
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Raleway',sans-serif;background:var(--dark);color:var(--text);overflow-x:hidden;min-height:100vh;}
+
+    /* ── UNDERWATER BG ── */
+    .underwater-bg{position:fixed;inset:0;z-index:0;overflow:hidden;
+      background:linear-gradient(180deg,#001820 0%,#003040 20%,#004d5e 50%,#005566 75%,#001c28 100%);}
+    .caustics{position:absolute;top:-10%;left:-10%;width:120%;height:40%;
+      background:radial-gradient(ellipse 60% 30% at 30% 20%,rgba(0,230,200,0.13) 0%,transparent 70%),
+                radial-gradient(ellipse 40% 20% at 70% 10%,rgba(0,200,230,0.10) 0%,transparent 60%),
+                radial-gradient(ellipse 50% 25% at 50% 35%,rgba(0,255,220,0.08) 0%,transparent 70%);
+      animation:causticShift 8s ease-in-out infinite alternate;filter:blur(6px);}
+    @keyframes causticShift{
+      0%{transform:scaleX(1) scaleY(1) translateX(0);opacity:.7}
+      50%{transform:scaleX(1.08) scaleY(1.04) translateX(2%);opacity:1}
+      100%{transform:scaleX(.95) scaleY(1.06) translateX(-2%);opacity:.8}}
+    .water-surface{position:absolute;top:0;left:0;right:0;height:6px;
+      background:linear-gradient(90deg,transparent,rgba(0,230,220,.6),rgba(180,255,255,.8),rgba(0,230,220,.4),transparent);
+      animation:surfaceWave 3s ease-in-out infinite alternate;filter:blur(1px);}
+    @keyframes surfaceWave{0%{transform:scaleX(1);opacity:.6}100%{transform:scaleX(1.02);opacity:1}}
+    .kente-overlay{position:absolute;inset:0;opacity:.04;pointer-events:none;
+      background-image:repeating-linear-gradient(45deg,#f5c842 0,#f5c842 2px,transparent 2px,transparent 20px),
+                       repeating-linear-gradient(-45deg,#e07b00 0,#e07b00 2px,transparent 2px,transparent 20px);}
+    .light-rays{position:absolute;inset:0;
+      background:linear-gradient(175deg,rgba(0,230,200,.07) 0%,transparent 40%),
+                linear-gradient(185deg,rgba(0,200,255,.05) 0%,transparent 35%),
+                linear-gradient(170deg,rgba(0,255,220,.04) 0%,transparent 45%);
+      animation:rayShift 12s ease-in-out infinite alternate;}
+    @keyframes rayShift{0%{opacity:.5;transform:skewX(0)}100%{opacity:1;transform:skewX(1deg)}}
+    .seaweed{position:absolute;bottom:0;left:0;right:0;height:100px;overflow:hidden;pointer-events:none;}
+    .seaweed svg{width:100%;height:100%;opacity:.15;}
+
+    /* ── BUBBLES ── */
+    .bubbles-container{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden;}
+    .bubble{position:absolute;bottom:-60px;border-radius:50%;
+      background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.55),rgba(180,255,255,.12) 60%,transparent 80%);
+      border:1px solid rgba(180,255,255,.35);
+      box-shadow:inset 0 0 8px rgba(255,255,255,.2),0 0 6px rgba(0,230,220,.15);
+      animation:floatBubble linear infinite;}
+    .bubble::before{content:'';position:absolute;top:18%;left:22%;width:28%;height:18%;
+      background:rgba(255,255,255,.55);border-radius:50%;transform:rotate(-30deg);filter:blur(1px);}
+    @keyframes floatBubble{
+      0%{transform:translateX(0) translateY(0) scale(1);opacity:0}
+      5%{opacity:1}80%{opacity:.7}95%{opacity:0}
+      100%{transform:translateX(var(--drift)) translateY(-110vh) scale(var(--se));opacity:0}}
+
+    /* ── NAV ── */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;
+      justify-content:space-between;padding:12px 30px;background:var(--nav-bg);
+      backdrop-filter:blur(18px) saturate(1.5);border-bottom:1px solid rgba(0,230,200,.2);
+      box-shadow:0 4px 30px rgba(0,0,0,.4),0 1px 0 rgba(0,230,200,.1);}
+    .logo-section{display:flex;align-items:center;gap:12px;}
+    .logo-section img{width:46px;height:46px;border-radius:50%;border:2px solid var(--aqua);box-shadow:0 0 14px rgba(0,230,200,.5);}
+    .logo-section h2{font-family:'Cinzel Decorative',serif;font-size:1.1rem;
+      background:linear-gradient(90deg,var(--aqua),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:2px;}
+    .nav-links{display:flex;align-items:center;gap:8px;}
+    .dropdown{position:relative;}
+    .dropbtn{background:rgba(0,230,200,.1);color:var(--aqua);padding:8px 18px;border:1px solid rgba(0,230,200,.3);
+      border-radius:4px;cursor:pointer;font-family:'Raleway',sans-serif;font-weight:700;font-size:.9rem;
+      letter-spacing:1px;transition:all .3s;backdrop-filter:blur(6px);}
+    .dropbtn:hover{background:rgba(0,230,200,.22);border-color:var(--aqua);
+      box-shadow:0 0 16px rgba(0,230,200,.35),inset 0 0 8px rgba(0,230,200,.08);color:#fff;}
+    .dropdown-content{display:none;position:absolute;top:calc(100% + 8px);left:0;
+      background:rgba(0,20,30,.92);backdrop-filter:blur(20px);border:1px solid rgba(0,230,200,.2);
+      border-radius:8px;z-index:200;padding:20px;
+      box-shadow:0 20px 60px rgba(0,0,0,.6),0 0 40px rgba(0,230,200,.07);animation:dropIn .3s ease;}
+    @keyframes dropIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+    .dropdown:hover .dropdown-content{display:block;}
+    .dropdown-content.rooms{width:90vw;left:-35vw;max-height:78vh;overflow-y:auto;}
+    .dropdown-content.rooms::-webkit-scrollbar{width:5px;}
+    .dropdown-content.rooms::-webkit-scrollbar-thumb{background:var(--aqua);border-radius:3px;}
+    .dropdown-content.contact,.dropdown-content.location{width:260px;right:0;left:auto;padding:18px 22px;}
+    .dropdown-content.contact p,.dropdown-content.location p{color:var(--text);font-size:.9rem;padding:6px 0;border-bottom:1px solid rgba(0,230,200,.1);}
+    .dropdown-content.contact p:last-child,.dropdown-content.location p:last-child{border-bottom:none;}
+
+    /* ── ROOM IMAGES ── */
+    .room-section{margin-bottom:28px;}
+    .room-section h3{font-family:'Cinzel Decorative',serif;font-size:.9rem;color:var(--gold);
+      margin-bottom:14px;letter-spacing:2px;border-left:3px solid var(--aqua);padding-left:10px;}
+    .room-images{display:flex;flex-wrap:wrap;gap:10px;}
+    .room-images img{width:200px;height:160px;object-fit:cover;border-radius:6px;
+      border:1px solid rgba(0,230,200,.2);cursor:zoom-in;filter:brightness(.92) saturate(1.1);
+      transition:transform .35s cubic-bezier(.22,.68,0,1.4),box-shadow .3s,filter .3s;}
+    .room-images img:hover{transform:scale(1.1);z-index:10;position:relative;
+      box-shadow:0 0 28px rgba(0,230,200,.45),0 8px 30px rgba(0,0,0,.5);filter:brightness(1.08) saturate(1.3);}
+
+    /* ── LIGHTBOX ── */
+    #lightbox{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,5,15,.92);
+      backdrop-filter:blur(24px);align-items:center;justify-content:center;cursor:zoom-out;}
+    #lightbox.active{display:flex;}
+    #lightbox img{max-width:88vw;max-height:82vh;border-radius:8px;
+      border:1px solid rgba(0,230,200,.3);box-shadow:0 0 60px rgba(0,230,200,.25);animation:lbIn .3s ease;}
+    @keyframes lbIn{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+    #lb-close{position:absolute;top:22px;right:30px;color:var(--aqua);font-size:2rem;cursor:pointer;line-height:1;transition:color .2s;}
+    #lb-close:hover{color:var(--gold);}
+
+    /* ── MAIN ── */
+    main{position:relative;z-index:2;padding:110px 20px 90px;}
+    .hero-banner{text-align:center;padding:40px 20px 30px;margin-bottom:40px;}
+    .hero-banner h1{font-family:'Cinzel Decorative',serif;font-size:clamp(1.5rem,5vw,3rem);
+      background:linear-gradient(135deg,var(--aqua) 0%,#fff 40%,var(--gold) 80%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+      letter-spacing:4px;margin-bottom:14px;animation:heroReveal 1.2s ease both;}
+    @keyframes heroReveal{from{opacity:0;transform:translateY(30px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+    .hero-banner p.subtitle{font-size:.9rem;color:rgba(180,255,255,.65);letter-spacing:3px;font-weight:300;animation:heroReveal 1.4s ease both;}
+    .hero-divider{width:120px;height:2px;background:linear-gradient(90deg,transparent,var(--aqua),var(--gold),transparent);margin:16px auto;animation:heroReveal 1.6s ease both;}
+
+    .kente-stripe{display:flex;height:6px;width:100%;margin-bottom:40px;border-radius:3px;overflow:hidden;}
+    .kente-stripe span{flex:1;animation:kenteFlow 3s ease-in-out infinite alternate;}
+    .kente-stripe span:nth-child(1){background:#f5c842;}
+    .kente-stripe span:nth-child(2){background:#e07b00;}
+    .kente-stripe span:nth-child(3){background:#00e5c8;}
+    .kente-stripe span:nth-child(4){background:#006080;}
+    .kente-stripe span:nth-child(5){background:#8B0000;}
+    .kente-stripe span:nth-child(6){background:#f5c842;}
+    .kente-stripe span:nth-child(7){background:#00e5c8;}
+    .kente-stripe span:nth-child(8){background:#e07b00;}
+    @keyframes kenteFlow{0%{filter:brightness(.8)}100%{filter:brightness(1.35)}}
+
+    .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;max-width:1100px;margin:0 auto;}
+    .feature-card{background:var(--glass);border:1px solid rgba(0,230,200,.15);border-radius:12px;
+      padding:26px 22px;display:flex;flex-direction:column;gap:12px;backdrop-filter:blur(14px);
+      position:relative;overflow:hidden;
+      transition:transform .4s ease,box-shadow .4s ease,border-color .4s ease;
+      animation:cardFloat 6s ease-in-out infinite alternate;}
+    .feature-card:nth-child(2){animation-delay:1.5s;}
+    .feature-card:nth-child(3){animation-delay:3s;}
+    .feature-card:nth-child(4){animation-delay:4.5s;}
+    @keyframes cardFloat{0%{transform:translateY(0)}100%{transform:translateY(-7px)}}
+    .feature-card:hover{transform:translateY(-12px) scale(1.01);
+      box-shadow:0 20px 50px rgba(0,0,0,.4),0 0 30px rgba(0,230,200,.15);border-color:rgba(0,230,200,.4);}
+    .feature-card::before{content:'';position:absolute;inset:0;
+      background:radial-gradient(ellipse at 50% 0%,rgba(0,230,200,.08) 0%,transparent 70%);pointer-events:none;}
+    .card-img-wrap{position:relative;border-radius:8px;overflow:hidden;height:190px;}
+    .card-img-wrap img{width:100%;height:100%;object-fit:cover;filter:brightness(.8) saturate(1.2);
+      transition:filter .4s ease,transform .5s ease;}
+    .feature-card:hover .card-img-wrap img{filter:brightness(1) saturate(1.4);transform:scale(1.06);}
+    .card-img-wrap::after{content:'';position:absolute;inset:0;
+      background:linear-gradient(180deg,rgba(0,80,120,.25) 0%,rgba(0,20,40,.5) 100%);
+      mix-blend-mode:multiply;pointer-events:none;}
+    .card-icon{font-size:1.8rem;filter:drop-shadow(0 0 8px rgba(0,230,200,.6));}
+    .card-title{font-family:'Cinzel Decorative',serif;font-size:.95rem;color:var(--gold);letter-spacing:1.5px;}
+    .card-text{font-size:.86rem;line-height:1.7;color:rgba(200,245,255,.8);}
+
+    .contact-panel{max-width:680px;margin:60px auto 0;background:rgba(0,20,35,.7);
+      border:1px solid rgba(0,230,200,.18);border-radius:16px;padding:36px 32px;
+      backdrop-filter:blur(20px);box-shadow:0 20px 60px rgba(0,0,0,.4),inset 0 1px 0 rgba(0,230,200,.1);}
+    .contact-panel h2{font-family:'Cinzel Decorative',serif;font-size:1.1rem;color:var(--gold);text-align:center;letter-spacing:2px;margin-bottom:6px;}
+    .contact-sub{text-align:center;font-size:.78rem;color:rgba(180,255,255,.45);letter-spacing:2px;margin-bottom:28px;}
+    .comm-buttons{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;}
+    .comm-btn{display:flex;align-items:center;gap:10px;padding:12px 22px;border-radius:8px;
+      font-family:'Raleway',sans-serif;font-weight:700;font-size:.86rem;letter-spacing:1px;
+      text-decoration:none;transition:all .3s;border:1px solid transparent;position:relative;overflow:hidden;}
+    .comm-btn::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,.05);transform:translateX(-100%);transition:transform .3s;}
+    .comm-btn:hover::before{transform:translateX(0);}
+    .comm-btn svg{width:20px;height:20px;flex-shrink:0;}
+    .btn-whatsapp{background:rgba(37,211,102,.12);border-color:rgba(37,211,102,.4);color:#25d366;}
+    .btn-whatsapp:hover{background:rgba(37,211,102,.22);box-shadow:0 0 22px rgba(37,211,102,.3);color:#fff;}
+    .btn-email{background:rgba(0,230,200,.1);border-color:rgba(0,230,200,.35);color:var(--aqua);}
+    .btn-email:hover{background:rgba(0,230,200,.2);box-shadow:0 0 22px rgba(0,230,200,.3);color:#fff;}
+    .btn-sms{background:rgba(245,200,66,.1);border-color:rgba(245,200,66,.35);color:var(--gold);}
+    .btn-sms:hover{background:rgba(245,200,66,.2);box-shadow:0 0 22px rgba(245,200,66,.3);color:#fff;}
+    .btn-call{background:rgba(224,123,0,.1);border-color:rgba(224,123,0,.35);color:var(--amber);}
+    .btn-call:hover{background:rgba(224,123,0,.2);box-shadow:0 0 22px rgba(224,123,0,.3);color:#fff;}
+
+    footer{position:relative;z-index:2;background:rgba(0,10,20,.9);border-top:1px solid rgba(0,230,200,.15);
+      text-align:center;padding:22px;backdrop-filter:blur(14px);}
+    footer p{font-size:.8rem;color:rgba(180,255,255,.45);letter-spacing:2px;}
+    footer p:first-child{font-family:'Cinzel Decorative',serif;color:var(--gold);font-size:.72rem;margin-bottom:4px;}
+
+    .reveal{opacity:0;transform:translateY(40px);transition:opacity .7s ease,transform .7s ease;}
+    .reveal.visible{opacity:1;transform:translateY(0);}
+  </style>
+</head>
+<body>
+
+  <div id="lightbox" onclick="closeLightbox()">
+    <span id="lb-close" onclick="closeLightbox()">&#x2715;</span>
+    <img id="lb-img" src="" alt="">
+  </div>
+
+  <div class="underwater-bg">
+    <div class="caustics"></div>
+    <div class="water-surface"></div>
+    <div class="light-rays"></div>
+    <div class="kente-overlay"></div>
+    <div class="seaweed">
+      <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+        <path d="M0,60 C60,20 120,100 180,60 C240,20 300,100 360,60 C420,20 480,100 540,60 C600,20 660,100 720,60 C780,20 840,100 900,60 C960,20 1020,100 1080,60 C1140,20 1200,100 1260,60 C1320,20 1380,100 1440,60 L1440,120 L0,120 Z" fill="#00e5c8"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="bubbles-container" id="bubblesContainer"></div>
+
+  <nav>
+    <div class="logo-section">
+      <img src="minipro.jpg" alt="Sara Rentals">
+      <h2>SARA RENTALS</h2>
+    </div>
+    <div class="nav-links">
+      <div class="dropdown">
+        <button class="dropbtn">&#127968; Room Images</button>
+        <div class="dropdown-content rooms">
+          <div class="room-section">
+            <h3>Along Mombasa Road Accommodations</h3>
+            <div class="room-images">
+              <img src="am1.jpg"  alt="Building view 1">
+              <img src="am2.jpg" alt="Building view 2">
+              <img src="am3.jpg"  alt="Building view 1">
+              <img src="am4.jpg" alt="Building view 2">
+             
+              
+            </div>
+          </div>
+          <div class="room-section">
+            <h3>Athi River Accommodation</h3>
+            <div class="room-images">
+              <img src="ar1.jpg"  alt="1 Bed 1">
+              <img src="ar2.jpg" alt="1 Bed 2">
+              <img src="ar3.jpg" alt="1 Bed 3">
+              <img src="ar4.jpg"  alt="1 Bed 1">
+              <img src="ar5.jpg" alt="1 Bed 2">
+              <img src="ar6.jpg" alt="1 Bed 3">
+              <img src="ar7.jpg"  alt="1 Bed 1">
+              <img src="ar8.jpg" alt="1 Bed 2">
+              <img src="ar9.jpg" alt="1 Bed 3">
+              <img src="ar10.jpg"  alt="1 Bed 1">
+              <img src="ar11.jpg" alt="1 Bed 2">
+              <img src="ar12.jpg" alt="1 Bed 3">
+              <img src="ar13.jpg" alt="1 Bed 2">
+              <img src="ar14.jpg" alt="1 Bed 3">
+              <img src="ar15.jpg" alt="1 Bed 3">
+              <img src="ar16.jpg" alt="1 Bed 2">
+              <img src="ar17.jpg" alt="1 Bed 3">
+            </div>
+          </div>
+          <div class="room-section">
+            <h3>Lukenya Accommodations</h3>
+            <div class="room-images">
+              <img src="l1.jpg" alt="Bedsitter 1">
+              <img src="l2.jpg" alt="Bedsitter 2">
+              <img src="l3.jpg" alt="Bedsitter 3">
+              <img src="l4.jpg" alt="Bedsitter 4">
+              <img src="l5.jpg" alt="Bedsitter 5">
+              <img src="l6.jpg" alt="Bedsitter 4">
+              <img src="l7.jpg" alt="Bedsitter 5">
+              <img src="l8.jpg" alt="Bedsitter 4">
+              
+            </div>
+          </div>
+          <div class="room-section">
+            <h3>Kirifi Accommodations</h3>
+            <div class="room-images">
+              <img src="k1.jpg" alt="Single 1">
+              <img src="k2.jpg" alt="Single 2">
+              <img src="k3.jpg" alt="Single 1">
+              <img src="k4.jpg" alt="Single 2">
+              <img src="k5.jpg" alt="Single 1">
+              <img src="k6.jpg" alt="Single 2">
+              <img src="k7.jpg" alt="Single 1">
+              <img src="k8.jpg" alt="Single 2">
+              <img src="k9.jpg" alt="Single 1">
+              <img src="k10.jpg" alt="Single 2">
+              <img src="k11.jpg" alt="Single 1">
+              <img src="k12.jpg" alt="Single 2">
+              <img src="k13.jpg" alt="Single 1">
+              <img src="k14.jpg" alt="Single 2">
+              <img src="k15.jpg" alt="Single 1">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="dropdown">
+        <button class="dropbtn">&#128222; Contact</button>
+        <div class="dropdown-content contact">
+          <p>&#128241; +254 713 582 460</p>
+          <p>&#9993; saranabatanzi058@gmail.com</p>
+        </div>
+      </div>
+      <div class="dropdown">
+        <button class="dropbtn">&#128205; Location</button>
+        <div class="dropdown-content location">
+          <p>County: Kiambu</p>
+          <p>Sub-County: Ruiru</p>
+          <p>Location: Mwihoko</p>
+          <p>Street: Kwa Jeshi</p>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="hero-banner">
+      <p class="subtitle">&#10022; MWIHOKO &middot; RUIRU &middot; KIAMBU &#10022;</p>
+      <div class="hero-divider"></div>
+      <h1>WELCOME TO SARA RENTALS</h1>
+      <div class="hero-divider"></div>
+      <p class="subtitle">Where Comfort Meets African Heritage</p>
+    </div>
+
+    <div class="kente-stripe">
+      <span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card reveal">
+        <div class="card-img-wrap"><img src="water.jpg" alt="Water Supply"></div>
+        <div class="card-icon">&#128167;</div>
+        <div class="card-title">Abundant Water</div>
+        <div class="card-text">Enjoy clean, abundant water throughout your stay. Dedicated storage ensures refreshing showers and reliable supply 24/7 &mdash; no interruptions, no worries.</div>
+      </div>
+      <div class="feature-card reveal">
+        <div class="card-img-wrap"><img src="security.jpg" alt="Security"></div>
+        <div class="card-icon">&#128737;</div>
+        <div class="card-title">Tight Security</div>
+        <div class="card-text">Your safety is our top priority. Our team is always ready to respond to any situation with speed and professionalism, protecting you and your property.</div>
+      </div>
+      <div class="feature-card reveal">
+        <div class="card-img-wrap"><img src="waste.jpg" alt="Waste Management"></div>
+        <div class="card-icon">&#9851;</div>
+        <div class="card-title">Waste Management</div>
+        <div class="card-text">We take environmental responsibility seriously. Proper waste disposal systems keep the compound clean, hygienic, and eco-friendly at all times.</div>
+      </div>
+      <div class="feature-card reveal">
+        <div class="card-img-wrap"><img src="cleaning.jpg" alt="Clean Environment"></div>
+        <div class="card-icon">&#10024;</div>
+        <div class="card-title">Pristine Environment</div>
+        <div class="card-text">A clean, tidy environment is non-negotiable here. Common areas are maintained to the highest standard so you always feel at home.</div>
+      </div>
+    </div>
+
+    <div class="contact-panel reveal">
+      <h2>Reach Us Instantly</h2>
+      <p class="contact-sub">&#10022; CHOOSE YOUR PREFERRED CHANNEL &#10022;</p>
+      <div class="comm-buttons">
+        <a class="comm-btn btn-whatsapp"
+           href="https://wa.me/254713582460?text=Hello%20Sara%20Rentals%2C%20I%20am%20interested%20in%20renting%20a%20room."
+           target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+            <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.846L0 24l6.336-1.501A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818c-1.909 0-3.686-.529-5.196-1.441l-.374-.222-3.76.891.925-3.657-.244-.386A9.817 9.817 0 012.182 12C2.182 6.576 6.576 2.182 12 2.182c5.424 0 9.818 4.394 9.818 9.818 0 5.424-4.394 9.818-9.818 9.818z"/>
+          </svg>
+          WhatsApp
+        </a>
+        <a class="comm-btn btn-email"
+           href="mailto:saranabatanzi058@gmail.com?subject=Room%20Inquiry&body=Hello%20Sara%20Rentals%2C%20I%20would%20like%20to%20inquire%20about%20available%20rooms.">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="4" width="20" height="16" rx="2"/>
+            <path d="M2 7l10 7 10-7"/>
+          </svg>
+          Send Email
+        </a>
+        <a class="comm-btn btn-sms" href="sms:+254713582460?body=Hello%20Sara%20Rentals%2C%20I%20am%20interested%20in%20renting%20a%20room.">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+          </svg>
+          Send SMS
+        </a>
+        <a class="comm-btn btn-call" href="tel:+254713582460">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+          </svg>
+          Call Us
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>SARA RENTALS &#10022; MWIHOKO, RUIRU</p>
+    <p>&copy; 2004 &ndash; 2025 &middot; Thank you for visiting &middot; Built with love in Africa</p>
+  </footer>
+
+  <script>
+    const container=document.getElementById('bubblesContainer');
+    function rand(a,b){return a+Math.random()*(b-a);}
+    function spawnBubble(){
+      const b=document.createElement('div');
+      b.classList.add('bubble');
+      const size=rand(5,52);
+      b.style.cssText=[
+        'width:'+size+'px','height:'+size+'px',
+        'left:'+rand(0,100)+'%',
+        'animation-duration:'+rand(9,26)+'s',
+        'animation-delay:'+rand(0,22)+'s',
+        '--drift:'+rand(-100,100)+'px',
+        '--se:'+rand(.6,1.1)
+      ].join(';');
+      container.appendChild(b);
+    }
+    for(let i=0;i<65;i++) spawnBubble();
+    setInterval(()=>{if(container.children.length<65) spawnBubble();},1500);
+
+    function openLightbox(img){
+      document.getElementById('lb-img').src=img.src;
+      document.getElementById('lightbox').classList.add('active');
+    }
+    function closeLightbox(){document.getElementById('lightbox').classList.remove('active');}
+    document.addEventListener('keydown',e=>{if(e.key==='Escape') closeLightbox();});
+
+    const obs=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
+    },{threshold:.12});
+    document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+  </script>
+</body>
+</html>
