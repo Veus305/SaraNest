@@ -3,1010 +3,1222 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SARA RENTALS</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Rajdhani:wght@400;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+  <title>SARA NEST – Premium Property Agency Kenya</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@200;300;400;600;700&family=Cinzel+Decorative:wght@400;700;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --aqua:       #00e5c8;
-      --aqua-dark:  #00b89f;
-      --aqua-glow:  #00ffe7;
-      --black:      #050f0d;
-      --dark:       #0a1a17;
-      --dark2:      #0f2620;
-      --charcoal:   #1a3330;
-      --gold:       #d4a843;
-      --gold-light: #f0c96a;
-      --red-kente:  #c0392b;
-      --green-kente:#1e8449;
-      --text-light: #d0f5ef;
-      --text-dim:   #7ab8b0;
-      --blur-bg:    rgba(0,229,200,0.07);
-      --nav-h:      70px;
+      --gold:#f5c842; --amber:#e07b00; --rust:#c1440e; --sunset:#ff6b35;
+      --savanna:#d4a654; --dusk:#7b3f00; --dark:#0a0500; --deep:#050200;
+      --plasma:#00e5ff; --neon-gold:#ffe566; --holo:#7fffd4;
+      --solar:#ffaa00; --void:#010008;
+      --glass:rgba(255,160,60,0.06);
+      --glass2:rgba(0,229,255,0.05);
+      --text:#fff4e0;
+      --nav-bg:rgba(5,2,0,0.92);
+      --grid-line:rgba(245,200,66,0.07);
     }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Exo 2',sans-serif;background:var(--deep);color:var(--text);overflow-x:hidden;min-height:100vh;cursor:none;}
 
-    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    /* ── CUSTOM CURSOR ── */
+    .cursor{position:fixed;width:12px;height:12px;border-radius:50%;background:var(--gold);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:transform .1s;}
+    .cursor-ring{position:fixed;width:36px;height:36px;border-radius:50%;border:1px solid rgba(245,200,66,.5);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all .15s ease;}
 
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Rajdhani', sans-serif;
-      font-weight: 600;
-      background: var(--black);
-      color: var(--text-light);
-      overflow-x: hidden;
-      cursor: none;
-    }
-
-    /* ── Custom Cursor ── */
-    #cursor {
-      position: fixed; width:14px; height:14px; border-radius:50%;
-      background: var(--aqua-glow); pointer-events:none; z-index:99999;
-      transform:translate(-50%,-50%);
-      box-shadow: 0 0 18px var(--aqua-glow), 0 0 40px var(--aqua);
-      transition: transform .1s;
-    }
-    #cursor-ring {
-      position:fixed; width:36px; height:36px; border-radius:50%;
-      border:1.5px solid var(--aqua); pointer-events:none; z-index:99998;
-      transform:translate(-50%,-50%);
-      transition: transform .18s ease, width .2s, height .2s, opacity .2s;
-      opacity:.6;
-    }
-
-    /* ── African Pattern Background ── */
-    body::before {
-      content:'';
-      position:fixed; inset:0; z-index:0; pointer-events:none;
+    /* ── GRID OVERLAY ── */
+    .grid-overlay{position:fixed;inset:0;z-index:0;pointer-events:none;
       background-image:
-        repeating-linear-gradient(60deg, transparent, transparent 28px, rgba(0,229,200,0.025) 28px, rgba(0,229,200,0.025) 30px),
-        repeating-linear-gradient(-60deg, transparent, transparent 28px, rgba(212,168,67,0.02) 28px, rgba(212,168,67,0.02) 30px),
-        repeating-linear-gradient(0deg, transparent, transparent 58px, rgba(0,229,200,0.015) 58px, rgba(0,229,200,0.015) 60px);
+        linear-gradient(var(--grid-line) 1px,transparent 1px),
+        linear-gradient(90deg,var(--grid-line) 1px,transparent 1px);
+      background-size:60px 60px;
+      mask-image:radial-gradient(ellipse 80% 60% at 50% 50%,black 40%,transparent 100%);}
+
+    /* ── DEEP SPACE BG ── */
+    .sahara-bg{position:fixed;inset:0;z-index:0;overflow:hidden;
+      background:linear-gradient(180deg,
+        #000208 0%, #010510 5%,
+        #030a1a 12%, #0d0820 20%,
+        #1a0a2e 30%, #2d0d18 42%,
+        #5a1800 54%, #9b3300 63%,
+        #c85500 72%, #e07000 80%,
+        #d4a654 88%, #8b6914 94%,
+        #3d2800 100%);}
+
+    /* Solar disc — massive, dramatic */
+    .sun{position:absolute;bottom:26%;left:50%;transform:translateX(-50%);
+      width:180px;height:180px;border-radius:50%;
+      background:radial-gradient(circle,#ffffff 0%,#fffde0 15%,#ffe566 35%,#ffaa00 55%,rgba(255,80,0,0) 100%);
+      box-shadow:
+        0 0 0 2px rgba(255,220,100,.15),
+        0 0 60px 30px rgba(255,180,0,.4),
+        0 0 140px 70px rgba(255,120,0,.25),
+        0 0 300px 150px rgba(255,60,0,.12),
+        0 0 600px 300px rgba(200,40,0,.06);
+      animation:sunPulse 8s ease-in-out infinite alternate;}
+    @keyframes sunPulse{
+      0%{box-shadow:0 0 0 2px rgba(255,220,100,.15),0 0 60px 30px rgba(255,180,0,.4),0 0 140px 70px rgba(255,120,0,.25),0 0 300px 150px rgba(255,60,0,.12);}
+      100%{box-shadow:0 0 0 2px rgba(255,240,120,.25),0 0 80px 50px rgba(255,200,0,.5),0 0 180px 90px rgba(255,140,0,.3),0 0 400px 200px rgba(255,80,0,.15);}
     }
+
+    /* Solar rings */
+    .sun-ring{position:absolute;bottom:26%;left:50%;transform:translate(-50%,50%);border-radius:50%;border:1px solid;animation:ringExpand 6s ease-out infinite;}
+    .sun-ring:nth-child(1){width:260px;height:260px;border-color:rgba(255,180,0,.2);animation-delay:0s;}
+    .sun-ring:nth-child(2){width:360px;height:360px;border-color:rgba(255,140,0,.12);animation-delay:1.5s;}
+    .sun-ring:nth-child(3){width:480px;height:480px;border-color:rgba(255,100,0,.07);animation-delay:3s;}
+    @keyframes ringExpand{0%{opacity:.8;transform:translate(-50%,50%) scale(.8);}100%{opacity:0;transform:translate(-50%,50%) scale(1.2);}}
+
+    .horizon{position:absolute;bottom:24.5%;left:0;right:0;height:3px;
+      background:linear-gradient(90deg,transparent 5%,rgba(255,200,80,.3) 20%,rgba(255,255,200,.95) 50%,rgba(255,200,80,.3) 80%,transparent 95%);
+      filter:blur(1px);}
+    .heat-shimmer{position:absolute;bottom:22%;left:0;right:0;height:80px;
+      background:linear-gradient(180deg,rgba(255,150,50,.1) 0%,transparent 100%);
+      animation:shimmer 4s ease-in-out infinite alternate;filter:blur(4px);}
+    @keyframes shimmer{0%{transform:scaleY(1) translateY(0);opacity:.4;}100%{transform:scaleY(1.4) translateY(-8px);opacity:.85;}}
+
+    /* Futuristic dunes with glow */
+    .dunes{position:absolute;bottom:0;left:0;right:0;height:28%;pointer-events:none;}
+    .dunes svg{width:100%;height:100%;}
+
+    /* Stars */
+    .stars{position:absolute;top:0;left:0;right:0;height:50%;pointer-events:none;}
+    .stars span{position:absolute;background:#fff;border-radius:50%;animation:twinkle linear infinite;}
+    @keyframes twinkle{0%,100%{opacity:.05;transform:scale(1);}50%{opacity:1;transform:scale(1.6);}}
+
+    /* ── SCANNING LINE ── */
+    .scan-line{position:fixed;top:0;left:0;right:0;height:2px;
+      background:linear-gradient(90deg,transparent,rgba(0,229,255,.4),rgba(245,200,66,.6),rgba(0,229,255,.4),transparent);
+      z-index:1;pointer-events:none;animation:scan 12s linear infinite;opacity:.4;}
+    @keyframes scan{0%{top:0;}100%{top:100vh;}}
+
+    /* ── BIG 5 SAFARI CANVAS ── */
+    #safariCanvas{position:fixed;bottom:0;left:0;width:100%;height:30%;z-index:1;pointer-events:none;opacity:.85;}
+
+    /* ── DUST PARTICLES ── */
+    .dust-container{position:fixed;inset:0;pointer-events:none;z-index:2;overflow:hidden;}
+    .dust{position:absolute;border-radius:50%;background:rgba(212,166,84,.35);animation:dustFloat linear infinite;}
+    @keyframes dustFloat{0%{transform:translateX(0) translateY(0);opacity:0;}10%{opacity:.5;}90%{opacity:.15;}100%{transform:translateX(var(--dx)) translateY(-85vh);opacity:0;}}
 
     /* ── NAV ── */
-    nav {
-      position: fixed; top:0; width:100%; z-index:1000;
-      height: var(--nav-h);
-      display: flex; align-items:center; justify-content:space-between;
-      padding: 0 30px;
-      background: rgba(5,15,13,0.82);
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(0,229,200,0.2);
-      box-shadow: 0 0 40px rgba(0,229,200,0.08);
-    }
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;
+      justify-content:space-between;padding:12px 30px;background:var(--nav-bg);
+      backdrop-filter:blur(24px) saturate(1.8);
+      border-bottom:1px solid rgba(245,200,66,.18);
+      box-shadow:0 4px 40px rgba(0,0,0,.6),0 1px 0 rgba(255,160,60,.12),inset 0 -1px 0 rgba(0,229,255,.05);}
+    nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+      background:linear-gradient(90deg,transparent,rgba(0,229,255,.3),rgba(245,200,66,.5),rgba(0,229,255,.3),transparent);}
 
-    nav::after {
-      content:'';
-      position:absolute; bottom:0; left:0; right:0; height:2px;
-      background: linear-gradient(90deg, transparent, var(--aqua), var(--gold), var(--aqua), transparent);
-      animation: scanLine 4s linear infinite;
-    }
-    @keyframes scanLine {
-      0%{background-position:0% 0} 100%{background-position:200% 0}
-    }
+    .logo-section{display:flex;align-items:center;gap:14px;}
+    .logo-section img{width:46px;height:46px;border-radius:50%;
+      border:2px solid var(--gold);
+      box-shadow:0 0 18px rgba(245,200,66,.5),0 0 40px rgba(245,200,66,.15),inset 0 0 6px rgba(0,229,255,.1);}
+    .logo-section h2{font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:900;
+      background:linear-gradient(90deg,var(--neon-gold),#fff8c0,var(--gold),var(--sunset));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+      letter-spacing:4px;text-shadow:none;
+      filter:drop-shadow(0 0 8px rgba(245,200,66,.4));}
 
-    .logo-section {
-      display:flex; align-items:center; gap:12px;
-      text-decoration:none;
-    }
-    .logo-section img {
-      width:46px; height:46px; border-radius:50%;
-      border: 2px solid var(--aqua);
-      box-shadow: 0 0 14px var(--aqua), 0 0 30px rgba(0,229,200,0.3);
-      animation: pulseAvatar 3s ease-in-out infinite;
-    }
-    @keyframes pulseAvatar {
-      0%,100%{box-shadow:0 0 14px var(--aqua),0 0 30px rgba(0,229,200,.3)}
-      50%{box-shadow:0 0 22px var(--aqua-glow),0 0 55px rgba(0,229,200,.5)}
-    }
-    .logo-section h2 {
-      font-family:'Orbitron',sans-serif; font-size:1.15rem; letter-spacing:3px;
-      color: var(--aqua-glow);
-      text-shadow: 0 0 12px var(--aqua);
-    }
+    .nav-links{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+    .dropdown{position:relative;}
+    .dropbtn{background:rgba(245,200,66,.08);color:var(--gold);padding:8px 18px;
+      border:1px solid rgba(245,200,66,.25);border-radius:3px;cursor:none;
+      font-family:'Orbitron',sans-serif;font-weight:600;font-size:.75rem;
+      letter-spacing:2px;transition:all .3s;backdrop-filter:blur(6px);
+      clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));}
+    .dropbtn:hover{background:rgba(245,200,66,.18);border-color:var(--gold);
+      box-shadow:0 0 20px rgba(245,200,66,.35),inset 0 0 12px rgba(255,160,60,.06);color:#fff;
+      filter:drop-shadow(0 0 6px rgba(245,200,66,.5));}
 
-    .nav-links { display:flex; align-items:center; gap:6px; }
+    .dropdown-content{display:none;position:absolute;top:calc(100% + 10px);left:0;
+      background:rgba(5,2,0,.97);backdrop-filter:blur(28px);
+      border:1px solid rgba(245,200,66,.2);border-radius:0;z-index:200;padding:22px;
+      box-shadow:0 24px 80px rgba(0,0,0,.8),0 0 60px rgba(255,160,60,.05),inset 0 1px 0 rgba(245,200,66,.1);
+      animation:dropIn .25s ease;
+      clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));}
+    @keyframes dropIn{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
+    .dropdown:hover .dropdown-content{display:block;}
+    .dropdown-content.rooms{width:92vw;left:-30vw;max-height:80vh;overflow-y:auto;}
+    .dropdown-content.rooms::-webkit-scrollbar{width:4px;}
+    .dropdown-content.rooms::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px;}
+    .dropdown-content.contact,.dropdown-content.location{width:270px;right:0;left:auto;padding:20px 24px;}
+    .dropdown-content.contact p,.dropdown-content.location p{color:var(--text);font-size:.88rem;padding:8px 0;border-bottom:1px solid rgba(245,200,66,.08);}
+    .dropdown-content.contact p:last-child,.dropdown-content.location p:last-child{border-bottom:none;}
+    .dropdown-content.contact a{color:var(--gold);text-decoration:none;}
 
-    /* ── Dropdown ── */
-    .dropdown { position:relative; }
-    .dropbtn {
-      background: transparent;
-      border: 1px solid rgba(0,229,200,0.35);
-      color: var(--aqua);
-      padding: 8px 18px;
-      font-family:'Rajdhani',sans-serif; font-weight:700; font-size:.95rem;
-      letter-spacing:2px; text-transform:uppercase;
-      cursor:pointer; border-radius:3px;
-      transition: all .25s;
-      position:relative; overflow:hidden;
-    }
-    
-    .dropbtn::before {
-      content:'';
-      position:absolute; inset:0;
-      background: linear-gradient(135deg, rgba(0,229,200,0) 0%, rgba(0,229,200,0.12) 100%);
-      transform:translateX(-100%);
-      transition:.3s;
-    }
-    .dropbtn:hover::before { transform:translateX(0); }
-    .dropbtn:hover {
-      border-color: var(--aqua-glow);
-      color: var(--aqua-glow);
-      box-shadow: 0 0 18px rgba(0,229,200,0.25), inset 0 0 12px rgba(0,229,200,0.05);
-    }
+    /* ── PROPERTY PANELS ── */
+    .prop-panel{background:rgba(245,200,66,.04);border:1px solid rgba(245,200,66,.12);
+      border-radius:0;padding:16px;margin-bottom:20px;
+      clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));}
+    .prop-panel h4{font-family:'Orbitron',sans-serif;font-size:.7rem;color:var(--sunset);letter-spacing:2px;margin-bottom:12px;text-transform:uppercase;}
+    .prop-tag{display:inline-block;background:rgba(224,123,0,.15);border:1px solid rgba(245,200,66,.25);
+      color:var(--neon-gold);font-size:.72rem;padding:3px 10px;border-radius:0;margin:3px 3px 0 0;
+      letter-spacing:.8px;font-family:'Exo 2',sans-serif;
+      clip-path:polygon(0 0,calc(100% - 4px) 0,100% 4px,100% 100%,4px 100%,0 calc(100% - 4px));}
+    .prop-price{font-size:.82rem;color:#ffd080;margin-top:10px;font-weight:600;}
+    .prop-price span{color:var(--sunset);}
 
-    .dropdown-content {
-      display:none; position:absolute; top:calc(100% + 10px);
-      background: rgba(5,20,17,0.95);
-      backdrop-filter:blur(22px);
-      border:1px solid rgba(0,229,200,0.2);
-      border-radius:8px;
-      z-index:999;
-      animation: dropIn .3s ease;
-      box-shadow: 0 20px 60px rgba(0,0,0,.7), 0 0 30px rgba(0,229,200,0.1);
-    }
-    @keyframes dropIn {
-      from{opacity:0; transform:translateY(-10px)}
-      to{opacity:1; transform:translateY(0)}
-    }
-    .dropdown:hover .dropdown-content { display:block; }
+    /* ── ROOM IMAGES ── */
+    .room-section{margin-bottom:32px;}
+    .room-section h3{font-family:'Orbitron',sans-serif;font-size:.78rem;color:var(--gold);
+      margin-bottom:8px;letter-spacing:2px;border-left:3px solid var(--amber);padding-left:12px;
+      text-transform:uppercase;}
+    .room-section .prop-summary{font-size:.78rem;color:rgba(255,220,140,.6);margin-bottom:14px;padding-left:16px;font-style:italic;}
+    .room-images{display:flex;flex-wrap:wrap;gap:10px;}
+    .room-images img{width:200px;height:160px;object-fit:cover;
+      border:1px solid rgba(245,200,66,.15);cursor:zoom-in;
+      filter:brightness(.88) saturate(1.15);
+      transition:transform .35s cubic-bezier(.22,.68,0,1.4),box-shadow .3s,filter .3s;
+      clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));}
+    .room-images img:hover{transform:scale(1.1);z-index:10;position:relative;
+      box-shadow:0 0 30px rgba(245,200,66,.45),0 0 60px rgba(0,229,255,.1),0 8px 30px rgba(0,0,0,.5);
+      filter:brightness(1.08) saturate(1.4);}
 
-    /* Wide gallery dropdown */
-    .dropdown-content.gallery {
-      width: 95vw; left:50%; transform:translateX(-50%);
-      padding:28px; max-height:82vh; overflow-y:auto;
-    }
-    .dropdown:hover .dropdown-content.gallery { transform:translateX(-50%); }
+    /* ── LIGHTBOX ── */
+    #lightbox{display:none;position:fixed;inset:0;z-index:1000;background:rgba(2,1,0,.96);
+      backdrop-filter:blur(30px);align-items:center;justify-content:center;cursor:none;}
+    #lightbox.active{display:flex;}
+    #lightbox img{max-width:88vw;max-height:82vh;
+      border:1px solid rgba(245,200,66,.3);
+      box-shadow:0 0 80px rgba(245,200,66,.15),0 0 160px rgba(0,229,255,.05);
+      animation:lbIn .3s ease;
+      clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));}
+    @keyframes lbIn{from{transform:scale(.85);opacity:0;}to{transform:scale(1);opacity:1;}}
+    #lb-close{position:absolute;top:24px;right:32px;color:var(--gold);font-size:2rem;cursor:none;line-height:1;transition:color .2s,text-shadow .2s;}
+    #lb-close:hover{color:var(--plasma);text-shadow:0 0 14px rgba(0,229,255,.7);}
 
-    /* Small dropdowns */
-    .dropdown-content.small {
-      width:280px; right:0; left:auto;
-      padding:20px;
-    }
-
-    /* ── Room Sections ── */
-    .room-section { margin-bottom:28px; }
-    .room-section h3 {
-      font-family:'Orbitron',sans-serif; font-size:.85rem; letter-spacing:3px;
-      color: var(--gold); text-transform:uppercase;
-      margin-bottom:14px;
-      padding-bottom:6px;
-      border-bottom: 1px solid rgba(212,168,67,0.3);
-    }
-    .room-images {
-      display:flex; flex-wrap:wrap; gap:10px;
-    }
-    .room-images img {
-      width:220px; height:180px; object-fit:cover;
-      border-radius:4px;
-      border:1px solid rgba(0,229,200,0.15);
-      transition: transform .3s, box-shadow .3s, filter .3s;
-      cursor:zoom-in;
-      filter:brightness(.9) saturate(1.1);
-    }
-    .room-images img:hover {
-      transform:scale(1.05);
-      box-shadow:0 0 25px rgba(0,229,200,.4), 0 8px 30px rgba(0,0,0,.6);
-      filter:brightness(1.1) saturate(1.3);
-      z-index:10; position:relative;
-    }
-
-    /* ── Image Lightbox / Zoom ── */
-    #lightbox {
-      display:none; position:fixed; inset:0; z-index:9000;
-      background:rgba(0,0,0,.92);
-      backdrop-filter:blur(14px);
-      align-items:center; justify-content:center;
-      flex-direction:column; gap:16px;
-    }
-    #lightbox.open { display:flex; animation:fadeIn .25s ease; }
-    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
-    #lightbox img {
-      max-width:90vw; max-height:82vh;
-      border-radius:6px;
-      border:2px solid rgba(0,229,200,.35);
-      box-shadow:0 0 60px rgba(0,229,200,.2);
-      animation:zoomIn .3s cubic-bezier(.22,1,.36,1);
-    }
-    @keyframes zoomIn { from{transform:scale(.88)} to{transform:scale(1)} }
-    #lightbox-close {
-      color:var(--aqua); font-size:2.2rem; cursor:pointer;
-      font-family:'Orbitron',sans-serif;
-      transition:color .2s, text-shadow .2s;
-      background:none; border:none;
-    }
-    #lightbox-close:hover { color:var(--aqua-glow); text-shadow:0 0 18px var(--aqua); }
-
-    /* Small dropdown content */
-    .dropdown-content.small p {
-      color: var(--text-light); font-size:.95rem; letter-spacing:.5px;
-      padding:5px 0; border-bottom:1px solid rgba(0,229,200,0.1);
-      line-height:1.8;
-    }
-    .dropdown-content.small p:last-child { border-bottom:none; }
-    .dropdown-content.small .label {
-      color:var(--gold); font-size:.75rem; letter-spacing:2px;
-      text-transform:uppercase; display:block; margin-bottom:12px;
-      font-family:'Orbitron',sans-serif;
-    }
-
-    /* ── Communication Buttons ── */
-    .comm-buttons {
-      display:flex; flex-direction:column; gap:8px; margin-top:14px;
-    }
-    .comm-btn {
-      display:flex; align-items:center; gap:10px;
-      padding:9px 14px; border-radius:5px;
-      text-decoration:none; font-family:'Rajdhani',sans-serif;
-      font-weight:700; font-size:.9rem; letter-spacing:1px;
-      transition:all .25s; border:1px solid transparent;
-    }
-    .comm-btn svg { width:18px; height:18px; flex-shrink:0; }
-    .comm-btn.whatsapp { background:rgba(37,211,102,.12); border-color:rgba(37,211,102,.3); color:#25d366; }
-    .comm-btn.whatsapp:hover { background:rgba(37,211,102,.22); box-shadow:0 0 16px rgba(37,211,102,.3); }
-    .comm-btn.email { background:rgba(0,229,200,.10); border-color:rgba(0,229,200,.3); color:var(--aqua); }
-    .comm-btn.email:hover { background:rgba(0,229,200,.2); box-shadow:0 0 16px rgba(0,229,200,.25); }
-    .comm-btn.sms { background:rgba(212,168,67,.10); border-color:rgba(212,168,67,.3); color:var(--gold); }
-    .comm-btn.sms:hover { background:rgba(212,168,67,.2); box-shadow:0 0 16px rgba(212,168,67,.25); }
+    /* ── MAIN ── */
+    main{position:relative;z-index:3;padding:110px 20px 100px;}
 
     /* ── HERO ── */
-    #hero {
-      min-height:100vh; display:flex; align-items:center; justify-content:center;
-      flex-direction:column; text-align:center;
-      padding: calc(var(--nav-h) + 40px) 30px 120px;
-      position:relative; z-index:1;
-    }
+    .hero-banner{text-align:center;padding:50px 20px 36px;margin-bottom:48px;position:relative;}
+    .hero-banner::before{content:'';position:absolute;inset:0;
+      background:radial-gradient(ellipse 70% 80% at 50% 50%,rgba(245,200,66,.04) 0%,transparent 70%);}
+    .hero-badge{display:inline-block;font-family:'Orbitron',sans-serif;font-size:.65rem;
+      letter-spacing:5px;color:rgba(0,229,255,.7);
+      background:rgba(0,229,255,.05);border:1px solid rgba(0,229,255,.2);
+      padding:6px 22px;margin-bottom:24px;text-transform:uppercase;
+      clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));}
 
-    /* Kente strip hero decoration */
-    .kente-strip {
-      position:absolute; top:var(--nav-h); left:0; right:0;
-      height:5px;
-      background: repeating-linear-gradient(90deg,
-        var(--red-kente) 0px, var(--red-kente) 16px,
-        var(--gold)      16px, var(--gold)      32px,
-        var(--green-kente) 32px, var(--green-kente) 48px,
-        var(--aqua)      48px, var(--aqua)      64px,
-        var(--black)     64px, var(--black)     80px
-      );
-      animation: kenteSlide 6s linear infinite;
-    }
-    @keyframes kenteSlide { to{background-position:80px 0} }
+    .hero-banner h1{font-family:'Orbitron',sans-serif;font-weight:900;
+      font-size:clamp(2rem,8vw,5rem);
+      background:linear-gradient(135deg,var(--neon-gold) 0%,#fffde0 30%,var(--gold) 55%,var(--sunset) 80%,var(--rust) 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+      letter-spacing:clamp(4px,2vw,16px);margin-bottom:16px;
+      filter:drop-shadow(0 0 30px rgba(245,200,66,.3));
+      animation:heroReveal 1s cubic-bezier(.22,.68,0,1.2) both;}
+    @keyframes heroReveal{from{opacity:0;transform:translateY(40px) scale(.94);}to{opacity:1;transform:translateY(0) scale(1);}}
 
-    .hero-badge {
-      font-family:'Orbitron',sans-serif; font-size:.7rem; letter-spacing:5px;
-      color:var(--gold); border:1px solid rgba(212,168,67,.4);
-      padding:6px 18px; border-radius:30px; margin-bottom:24px;
-      animation:fadeSlideUp .8s ease both;
-      background:rgba(212,168,67,.06);
-    }
-    .hero-title {
-      font-family:'Cinzel Decorative',serif;
-      font-size:clamp(2.4rem,6vw,5rem);
-      line-height:1.1; color:white;
-      text-shadow: 0 0 40px rgba(0,229,200,.5), 0 0 80px rgba(0,229,200,.2);
-      animation:fadeSlideUp .9s .1s ease both;
-      margin-bottom:16px;
-    }
-    .hero-title span { color:var(--aqua-glow); }
-    .hero-sub {
-      font-size:1.1rem; letter-spacing:3px; color:var(--text-dim);
-      animation:fadeSlideUp .9s .2s ease both;
-      margin-bottom:36px;
-    }
-    .hero-cta {
-      display:inline-flex; gap:14px; animation:fadeSlideUp .9s .3s ease both;
-      flex-wrap:wrap; justify-content:center;
-    }
-    .btn-primary {
-      padding:13px 32px; background:linear-gradient(135deg,var(--aqua-dark),var(--aqua));
-      color:var(--black); font-family:'Orbitron',sans-serif; font-size:.8rem;
-      letter-spacing:2px; text-transform:uppercase; text-decoration:none;
-      border-radius:4px; font-weight:700;
-      box-shadow:0 0 30px rgba(0,229,200,.3);
-      transition:all .3s; border:none; cursor:pointer;
-    }
-    .btn-primary:hover { transform:translateY(-3px); box-shadow:0 0 50px rgba(0,229,200,.5); }
-    .btn-outline {
-      padding:13px 32px; background:transparent;
-      border:1px solid var(--gold); color:var(--gold);
-      font-family:'Orbitron',sans-serif; font-size:.8rem;
-      letter-spacing:2px; text-transform:uppercase; text-decoration:none;
-      border-radius:4px; font-weight:700; transition:all .3s;
-    }
-    .btn-outline:hover { background:rgba(212,168,67,.12); transform:translateY(-3px); }
+    .hero-subtitle{font-family:'Exo 2',sans-serif;font-weight:200;
+      font-size:clamp(.8rem,2vw,1rem);color:rgba(255,220,140,.6);
+      letter-spacing:6px;margin-bottom:8px;text-transform:uppercase;
+      animation:heroReveal 1.3s cubic-bezier(.22,.68,0,1.2) both;}
+    .hero-divider{display:flex;align-items:center;justify-content:center;gap:12px;margin:18px 0;
+      animation:heroReveal 1.5s ease both;}
+    .hero-divider::before,.hero-divider::after{content:'';flex:1;max-width:160px;height:1px;
+      background:linear-gradient(90deg,transparent,rgba(245,200,66,.6));}
+    .hero-divider::after{background:linear-gradient(90deg,rgba(245,200,66,.6),transparent);}
+    .hero-divider span{color:var(--gold);font-size:.9rem;opacity:.8;}
+    .hero-tagline{font-family:'Exo 2',sans-serif;font-size:.8rem;color:rgba(212,166,84,.6);
+      letter-spacing:3px;animation:heroReveal 1.7s ease both;}
 
-    @keyframes fadeSlideUp {
-      from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)}
-    }
+    /* ── DATA TICKER ── */
+    .data-ticker{position:relative;overflow:hidden;height:32px;background:rgba(0,0,0,.4);
+      border-top:1px solid rgba(245,200,66,.12);border-bottom:1px solid rgba(245,200,66,.12);
+      margin-bottom:44px;}
+    .ticker-track{display:flex;gap:0;animation:tickerScroll 35s linear infinite;white-space:nowrap;}
+    .ticker-item{font-family:'Orbitron',sans-serif;font-size:.62rem;letter-spacing:2px;
+      color:rgba(245,200,66,.65);padding:0 40px;line-height:32px;}
+    .ticker-item span{color:var(--plasma);margin:0 6px;}
+    @keyframes tickerScroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
 
-    /* Floating particles */
-    .particle {
-      position:absolute; border-radius:50%;
-      background:var(--aqua); opacity:.15;
-      animation:float linear infinite;
-      pointer-events:none;
-    }
-    @keyframes float {
-      0%{transform:translateY(100vh) rotate(0)} 100%{transform:translateY(-20vh) rotate(360deg)}
-    }
+    /* kente stripe — futuristic */
+    .kente-stripe{display:flex;height:3px;width:100%;margin-bottom:48px;overflow:hidden;
+      box-shadow:0 0 20px rgba(245,200,66,.2);}
+    .kente-stripe span{flex:1;animation:kenteFlow 4s ease-in-out infinite alternate;}
+    .kente-stripe span:nth-child(1){background:#f5c842;animation-delay:0s;}
+    .kente-stripe span:nth-child(2){background:#e07b00;animation-delay:.3s;}
+    .kente-stripe span:nth-child(3){background:#c1440e;animation-delay:.6s;}
+    .kente-stripe span:nth-child(4){background:#7b2600;animation-delay:.9s;}
+    .kente-stripe span:nth-child(5){background:#8B0000;animation-delay:1.2s;}
+    .kente-stripe span:nth-child(6){background:#f5c842;animation-delay:1.5s;}
+    .kente-stripe span:nth-child(7){background:#00e5ff;animation-delay:1.8s;}
+    .kente-stripe span:nth-child(8){background:#e07b00;animation-delay:2.1s;}
+    @keyframes kenteFlow{0%{filter:brightness(.6);}100%{filter:brightness(1.8);}}
 
-    /* Glow orbs */
-    .orb {
-      position:absolute; border-radius:50%; pointer-events:none;
-      filter:blur(80px); opacity:.18;
-    }
-    .orb1 { width:400px;height:400px;background:var(--aqua);top:10%;left:-5%; }
-    .orb2 { width:350px;height:350px;background:var(--gold);top:60%;right:-5%; }
-    .orb3 { width:250px;height:250px;background:var(--green-kente);bottom:15%;left:35%; }
+    /* ── SECTION HEADERS ── */
+    .section-header{text-align:center;margin:56px 0 32px;}
+    .section-header h2{font-family:'Orbitron',sans-serif;font-size:clamp(.9rem,2.5vw,1.4rem);
+      color:var(--gold);letter-spacing:5px;margin-bottom:10px;text-transform:uppercase;
+      filter:drop-shadow(0 0 12px rgba(245,200,66,.3));}
+    .section-header p{font-size:.8rem;color:rgba(212,166,84,.55);letter-spacing:3px;}
+    .section-divider{display:flex;align-items:center;justify-content:center;gap:8px;margin:14px auto 0;width:200px;}
+    .section-divider::before,.section-divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(245,200,66,.4));}
+    .section-divider::after{background:linear-gradient(90deg,rgba(245,200,66,.4),transparent);}
+    .section-divider span{width:5px;height:5px;background:var(--amber);transform:rotate(45deg);flex-shrink:0;}
 
-    /* ── FEATURES SECTION ── */
-    #features {
-      padding: 100px 30px 80px;
-      position:relative; z-index:1;
-    }
-    .section-header {
-      text-align:center; margin-bottom:60px;
-    }
-    .section-tag {
-      font-family:'Orbitron',sans-serif; font-size:.65rem; letter-spacing:5px;
-      color:var(--gold); text-transform:uppercase; display:block; margin-bottom:12px;
-    }
-    .section-title {
-      font-family:'Cinzel Decorative',serif; font-size:clamp(1.6rem,3.5vw,2.8rem);
-      color:white; line-height:1.2;
-    }
-    .section-title em { color:var(--aqua); font-style:normal; }
-    .section-line {
-      width:60px; height:2px; margin:18px auto 0;
-      background:linear-gradient(90deg,transparent,var(--aqua),transparent);
-    }
+    /* ── PROPERTY CARDS GRID ── */
+    .properties-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px;max-width:1240px;margin:0 auto;}
+    .prop-card{background:var(--glass);border:1px solid rgba(245,200,66,.12);
+      overflow:hidden;backdrop-filter:blur(18px);position:relative;
+      transition:transform .4s ease,box-shadow .4s ease,border-color .4s ease;
+      animation:cardFloat 8s ease-in-out infinite alternate;
+      clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,16px 100%,0 calc(100% - 16px));}
+    .prop-card:nth-child(2){animation-delay:2s;}
+    .prop-card:nth-child(3){animation-delay:4s;}
+    .prop-card:nth-child(4){animation-delay:6s;}
+    @keyframes cardFloat{0%{transform:translateY(0);}100%{transform:translateY(-10px);}}
+    .prop-card:hover{transform:translateY(-16px) scale(1.01);
+      box-shadow:0 24px 60px rgba(0,0,0,.55),0 0 40px rgba(245,200,66,.14),0 0 80px rgba(0,229,255,.04);
+      border-color:rgba(245,200,66,.35);}
+    .prop-card::before{content:'';position:absolute;inset:0;
+      background:radial-gradient(ellipse at 50% 0%,rgba(245,200,66,.06) 0%,transparent 65%);pointer-events:none;z-index:0;}
+    .prop-img-wrap{position:relative;height:210px;overflow:hidden;}
+    .prop-img-wrap img{width:100%;height:100%;object-fit:cover;filter:brightness(.82) saturate(1.2);
+      transition:filter .4s,transform .5s;}
+    .prop-card:hover .prop-img-wrap img{filter:brightness(1.02) saturate(1.4);transform:scale(1.07);}
+    .prop-img-wrap::after{content:'';position:absolute;inset:0;
+      background:linear-gradient(180deg,rgba(10,5,0,.1) 0%,rgba(5,2,0,.65) 100%);pointer-events:none;}
+    .prop-location-badge{position:absolute;top:14px;left:14px;background:rgba(5,2,0,.85);
+      color:var(--gold);font-size:.65rem;padding:5px 12px;
+      border:1px solid rgba(245,200,66,.3);letter-spacing:1.5px;backdrop-filter:blur(10px);
+      font-family:'Orbitron',sans-serif;
+      clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px));}
+    .prop-type-badge{position:absolute;top:14px;right:14px;background:rgba(224,123,0,.9);
+      color:#fff;font-size:.65rem;padding:5px 12px;letter-spacing:1.5px;
+      font-family:'Orbitron',sans-serif;
+      clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px));}
+    .prop-body{padding:20px 22px 24px;position:relative;z-index:1;}
+    .prop-name{font-family:'Orbitron',sans-serif;font-size:.85rem;font-weight:700;color:var(--gold);letter-spacing:2px;margin-bottom:10px;text-transform:uppercase;}
+    .prop-desc{font-size:.8rem;line-height:1.7;color:rgba(255,220,140,.72);margin-bottom:14px;}
+    .prop-features{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;}
+    .feat-tag{background:rgba(245,200,66,.08);border:1px solid rgba(245,200,66,.2);
+      color:rgba(255,220,140,.8);font-size:.68rem;padding:4px 10px;letter-spacing:.8px;font-family:'Exo 2',sans-serif;
+      clip-path:polygon(0 0,calc(100% - 4px) 0,100% 4px,100% 100%,4px 100%,0 calc(100% - 4px));}
+    .prop-pricing{background:rgba(0,0,0,.35);padding:14px;margin-top:12px;
+      border-left:2px solid var(--amber);}
+    .prop-pricing .price-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}
+    .prop-pricing .price-row:last-child{margin-bottom:0;}
+    .price-label{font-size:.7rem;color:rgba(212,166,84,.65);letter-spacing:1.5px;text-transform:uppercase;font-family:'Exo 2',sans-serif;}
+    .price-val{font-size:.88rem;font-weight:700;color:var(--sunset);font-family:'Orbitron',sans-serif;}
+    .price-val.mortgage{color:var(--gold);}
+    .prop-amenities{margin-top:14px;border-top:1px solid rgba(245,200,66,.08);padding-top:14px;}
+    .amenities-title{font-size:.68rem;color:rgba(212,166,84,.55);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;font-family:'Orbitron',sans-serif;}
+    .amenities-list{font-size:.75rem;color:rgba(255,220,140,.68);line-height:1.9;}
+    .amenity-item::before{content:'▸ ';}
+    .cta-btn{display:block;text-align:center;margin-top:18px;padding:12px;
+      background:linear-gradient(135deg,rgba(224,123,0,.2),rgba(245,200,66,.1));
+      border:1px solid rgba(245,200,66,.3);
+      color:var(--gold);font-size:.72rem;letter-spacing:3px;text-decoration:none;font-weight:700;
+      transition:all .3s;cursor:none;font-family:'Orbitron',sans-serif;text-transform:uppercase;
+      clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));}
+    .cta-btn:hover{background:linear-gradient(135deg,rgba(224,123,0,.45),rgba(245,200,66,.25));
+      box-shadow:0 0 24px rgba(245,200,66,.28),inset 0 0 16px rgba(0,229,255,.04);color:#fff;}
 
-    .features-grid {
-      display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-      gap:24px; max-width:1200px; margin:0 auto;
-    }
-    .feat-card {
-      background: var(--blur-bg);
-      border:1px solid rgba(0,229,200,0.12);
-      border-radius:10px;
-      overflow:hidden;
-      backdrop-filter:blur(10px);
-      transition: transform .35s, box-shadow .35s, border-color .35s;
-      position:relative;
-    }
-    .feat-card::before {
-      content:'';
-      position:absolute; top:0; left:0; right:0; height:3px;
-      background:linear-gradient(90deg,var(--aqua-dark),var(--gold));
-      transform:scaleX(0); transform-origin:left;
-      transition:.4s;
-    }
-    .feat-card:hover::before { transform:scaleX(1); }
-    .feat-card:hover {
-      transform:translateY(-8px);
-      border-color:rgba(0,229,200,0.35);
-      box-shadow:0 20px 60px rgba(0,0,0,.5), 0 0 30px rgba(0,229,200,0.1);
-    }
-    .feat-img-wrap { position:relative; overflow:hidden; height:220px; }
-    .feat-img-wrap img {
-      width:100%; height:100%; object-fit:cover;
-      transition:transform .5s, filter .5s;
-      filter:brightness(.85) saturate(1.2);
-    }
-    .feat-card:hover .feat-img-wrap img {
-      transform:scale(1.08);
-      filter:brightness(1) saturate(1.4);
-    }
-    .feat-img-wrap::after {
-      content:'';
-      position:absolute; inset:0;
-      background:linear-gradient(to top, rgba(5,15,13,.9) 0%, transparent 55%);
-    }
-    .feat-body { padding:22px; }
-    .feat-icon { font-size:1.6rem; margin-bottom:10px; }
-    .feat-body h3 {
-      font-family:'Orbitron',sans-serif; font-size:.85rem; letter-spacing:2px;
-      color:var(--aqua); text-transform:uppercase; margin-bottom:10px;
-    }
-    .feat-body p {
-      font-size:.95rem; color:var(--text-dim); line-height:1.7;
-    }
+    /* ── FEATURES GRID ── */
+    .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px;max-width:1100px;margin:0 auto;}
+    .feature-card{background:var(--glass);border:1px solid rgba(245,200,66,.12);
+      padding:28px 24px;display:flex;flex-direction:column;gap:14px;backdrop-filter:blur(18px);
+      position:relative;overflow:hidden;
+      transition:transform .4s,box-shadow .4s,border-color .4s;
+      animation:cardFloat 7s ease-in-out infinite alternate;
+      clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));}
+    .feature-card:nth-child(2){animation-delay:1.8s;}
+    .feature-card:nth-child(3){animation-delay:3.5s;}
+    .feature-card:nth-child(4){animation-delay:5.2s;}
+    .feature-card:hover{transform:translateY(-14px) scale(1.01);
+      box-shadow:0 24px 60px rgba(0,0,0,.45),0 0 40px rgba(245,200,66,.15),0 0 60px rgba(0,229,255,.04);
+      border-color:rgba(245,200,66,.35);}
+    .feature-card::before{content:'';position:absolute;inset:0;
+      background:radial-gradient(ellipse at 50% 0%,rgba(245,200,66,.06) 0%,transparent 68%);pointer-events:none;}
+    .card-img-wrap{position:relative;overflow:hidden;height:190px;
+      clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));}
+    .card-img-wrap img{width:100%;height:100%;object-fit:cover;filter:brightness(.78) saturate(1.2);
+      transition:filter .4s,transform .5s;}
+    .feature-card:hover .card-img-wrap img{filter:brightness(1) saturate(1.4);transform:scale(1.07);}
+    .card-img-wrap::after{content:'';position:absolute;inset:0;
+      background:linear-gradient(180deg,rgba(30,10,0,.15) 0%,rgba(5,2,0,.55) 100%);pointer-events:none;}
+    .card-icon{font-size:1.8rem;filter:drop-shadow(0 0 10px rgba(245,200,66,.7));}
+    .card-title{font-family:'Orbitron',sans-serif;font-size:.82rem;color:var(--gold);letter-spacing:2px;text-transform:uppercase;}
+    .card-text{font-size:.82rem;line-height:1.75;color:rgba(255,220,140,.72);}
 
-    /* ── ABOUT / CULTURAL ── */
-    #culture {
-      padding:80px 30px; position:relative; z-index:1;
-      background: linear-gradient(180deg, transparent, rgba(0,229,200,0.03), transparent);
-    }
-    .culture-inner {
-      max-width:1100px; margin:0 auto;
-      display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;
-    }
-    @media(max-width:768px){.culture-inner{grid-template-columns:1fr;}}
-    .culture-text h2 {
-      font-family:'Cinzel Decorative',serif; font-size:clamp(1.5rem,3vw,2.4rem);
-      color:white; margin-bottom:20px; line-height:1.2;
-    }
-    .culture-text h2 span { color:var(--gold); }
-    .culture-text p {
-      color:var(--text-dim); line-height:1.8; margin-bottom:14px; font-size:1rem;
-    }
-    .culture-badge {
-      display:inline-block; padding:6px 16px;
-      border:1px solid rgba(212,168,67,.35); border-radius:3px;
-      color:var(--gold); font-size:.75rem; letter-spacing:3px;
-      font-family:'Orbitron',sans-serif; text-transform:uppercase;
-      margin-bottom:24px;
-    }
-    .culture-visual {
-      position:relative; border-radius:10px; overflow:hidden;
-    }
-    .culture-visual img {
-      width:100%; aspect-ratio:4/3; object-fit:cover;
-      border-radius:10px;
-      border:1px solid rgba(0,229,200,0.2);
-      filter:saturate(1.2) brightness(.9);
-    }
-    .culture-visual::before {
-      content:''; position:absolute; inset:0; border-radius:10px;
-      background:linear-gradient(135deg,rgba(0,229,200,.1),transparent);
-      z-index:1; pointer-events:none;
-    }
-    /* Kente border decoration */
-    .culture-visual::after {
-      content:''; position:absolute;
-      bottom:0; left:0; right:0; height:6px;
-      background: repeating-linear-gradient(90deg,
-        var(--red-kente) 0,var(--red-kente) 12px,
-        var(--gold)      12px,var(--gold)      24px,
-        var(--green-kente) 24px,var(--green-kente) 36px,
-        var(--aqua)      36px,var(--aqua)      48px
-      ); z-index:2;
-    }
+    /* ── KILIFI TABLE ── */
+    .acc-table-wrap{max-width:700px;margin:0 auto;overflow-x:auto;}
+    .acc-table{width:100%;border-collapse:collapse;font-size:.82rem;}
+    .acc-table th{background:rgba(224,123,0,.28);color:var(--gold);padding:10px 16px;text-align:left;
+      font-family:'Orbitron',sans-serif;font-size:.68rem;letter-spacing:2px;border:1px solid rgba(245,200,66,.15);}
+    .acc-table td{padding:10px 16px;color:rgba(255,220,140,.82);border:1px solid rgba(245,200,66,.08);font-family:'Exo 2',sans-serif;}
+    .acc-table tr:nth-child(even) td{background:rgba(245,200,66,.03);}
+    .acc-table tr:hover td{background:rgba(245,200,66,.08);color:#fff;}
 
-    /* ── STATS ── */
-    #stats {
-      padding:60px 30px; position:relative; z-index:1;
-    }
-    .stats-grid {
-      display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-      gap:2px; max-width:900px; margin:0 auto;
-    }
-    .stat-box {
-      text-align:center; padding:40px 20px;
-      background:rgba(0,229,200,0.04);
-      border:1px solid rgba(0,229,200,0.1);
-      transition:background .3s;
-    }
-    .stat-box:hover { background:rgba(0,229,200,0.08); }
-    .stat-num {
-      font-family:'Orbitron',sans-serif; font-size:2.4rem; font-weight:900;
-      color:var(--aqua-glow);
-      text-shadow:0 0 20px rgba(0,229,200,.5);
-    }
-    .stat-label {
-      font-size:.8rem; letter-spacing:3px; color:var(--text-dim);
-      text-transform:uppercase; margin-top:6px;
-    }
+    /* ── CONTACT PANEL ── */
+    .contact-panel{max-width:720px;margin:70px auto 0;background:rgba(5,2,0,.8);
+      border:1px solid rgba(245,200,66,.18);padding:40px 36px;
+      backdrop-filter:blur(24px);
+      box-shadow:0 24px 80px rgba(0,0,0,.45),0 0 60px rgba(245,200,66,.04),inset 0 1px 0 rgba(245,200,66,.1);
+      clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,18px 100%,0 calc(100% - 18px));}
+    .contact-panel h2{font-family:'Orbitron',sans-serif;font-size:1rem;color:var(--gold);text-align:center;letter-spacing:4px;margin-bottom:6px;text-transform:uppercase;}
+    .contact-sub{text-align:center;font-size:.72rem;color:rgba(212,166,84,.45);letter-spacing:4px;margin-bottom:30px;font-family:'Exo 2',sans-serif;}
+    .comm-buttons{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;}
+    .comm-btn{display:flex;align-items:center;gap:10px;padding:12px 22px;
+      font-family:'Orbitron',sans-serif;font-weight:600;font-size:.72rem;letter-spacing:1.5px;
+      text-decoration:none;transition:all .3s;border:1px solid transparent;position:relative;overflow:hidden;cursor:none;text-transform:uppercase;
+      clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));}
+    .comm-btn::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,.04);transform:translateX(-100%);transition:transform .3s;}
+    .comm-btn:hover::before{transform:translateX(0);}
+    .comm-btn svg{width:18px;height:18px;flex-shrink:0;}
+    .btn-whatsapp{background:rgba(37,211,102,.1);border-color:rgba(37,211,102,.35);color:#25d366;}
+    .btn-whatsapp:hover{background:rgba(37,211,102,.2);box-shadow:0 0 24px rgba(37,211,102,.25);color:#fff;}
+    .btn-email{background:rgba(245,200,66,.08);border-color:rgba(245,200,66,.3);color:var(--gold);}
+    .btn-email:hover{background:rgba(245,200,66,.18);box-shadow:0 0 24px rgba(245,200,66,.25);color:#fff;}
+    .btn-sms{background:rgba(255,107,53,.08);border-color:rgba(255,107,53,.3);color:var(--sunset);}
+    .btn-sms:hover{background:rgba(255,107,53,.18);box-shadow:0 0 24px rgba(255,107,53,.25);color:#fff;}
+    .btn-call{background:rgba(224,123,0,.08);border-color:rgba(224,123,0,.3);color:var(--amber);}
+    .btn-call:hover{background:rgba(224,123,0,.18);box-shadow:0 0 24px rgba(224,123,0,.25);color:#fff;}
 
     /* ── FOOTER ── */
-    footer {
-      position:relative; z-index:1;
-      background:rgba(5,12,10,.95);
-      border-top:1px solid rgba(0,229,200,0.12);
-      padding:50px 30px 30px;
-    }
-    .footer-inner {
-      max-width:1100px; margin:0 auto;
-      display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-      gap:40px; margin-bottom:40px;
-    }
-    .footer-brand h3 {
-      font-family:'Orbitron',sans-serif; font-size:1rem; letter-spacing:3px;
-      color:var(--aqua-glow); margin-bottom:12px;
-    }
-    .footer-brand p { color:var(--text-dim); font-size:.9rem; line-height:1.7; }
-    .footer-col h4 {
-      font-family:'Orbitron',sans-serif; font-size:.7rem; letter-spacing:3px;
-      color:var(--gold); text-transform:uppercase; margin-bottom:14px;
-    }
-    .footer-col p, .footer-col a {
-      color:var(--text-dim); font-size:.9rem; line-height:2; display:block;
-      text-decoration:none; transition:color .2s;
-    }
-    .footer-col a:hover { color:var(--aqua); }
+    footer{position:relative;z-index:3;background:rgba(2,1,0,.95);
+      border-top:1px solid rgba(245,200,66,.12);text-align:center;padding:28px;backdrop-filter:blur(18px);}
+    footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+      background:linear-gradient(90deg,transparent,rgba(0,229,255,.25),rgba(245,200,66,.4),rgba(0,229,255,.25),transparent);}
+    footer p{font-size:.75rem;color:rgba(212,166,84,.4);letter-spacing:3px;font-family:'Exo 2',sans-serif;}
+    footer p:first-child{font-family:'Orbitron',sans-serif;color:rgba(245,200,66,.7);font-size:.7rem;margin-bottom:6px;letter-spacing:5px;}
 
-    .footer-bottom {
-      border-top:1px solid rgba(0,229,200,0.08);
-      padding-top:22px; text-align:center;
-      color:var(--text-dim); font-size:.85rem; letter-spacing:1px;
-    }
-    .kente-footer {
-      height:4px; margin-bottom:40px;
-      background: repeating-linear-gradient(90deg,
-        var(--red-kente) 0,var(--red-kente) 12px,
-        var(--gold)      12px,var(--gold)      24px,
-        var(--green-kente) 24px,var(--green-kente) 36px,
-        var(--aqua)      36px,var(--aqua)      48px,
-        var(--black)     48px,var(--black)     60px
-      );
-    }
+    /* ── REVEAL ANIMATION ── */
+    .reveal{opacity:0;transform:translateY(36px);transition:opacity .65s ease,transform .65s ease;}
+    .reveal.visible{opacity:1;transform:translateY(0);}
 
-    /* ── Scroll to top ── */
-    #scrollTop {
-      position:fixed; bottom:80px; right:24px; z-index:800;
-      width:42px; height:42px;
-      background:rgba(0,229,200,.12);
-      border:1px solid rgba(0,229,200,.3);
-      border-radius:4px; cursor:pointer;
-      display:flex; align-items:center; justify-content:center;
-      color:var(--aqua); font-size:1.2rem;
-      opacity:0; pointer-events:none;
-      transition:opacity .3s, transform .3s;
-    }
-    #scrollTop.show { opacity:1; pointer-events:all; }
-    #scrollTop:hover { transform:translateY(-4px); background:rgba(0,229,200,.22); }
+    /* ── HOLOGRAPHIC CORNER DECORATIONS ── */
+    .holo-corner{position:fixed;pointer-events:none;z-index:4;opacity:.35;}
+    .holo-corner svg{width:80px;height:80px;}
+    .holo-tl{top:70px;left:0;}
+    .holo-tr{top:70px;right:0;transform:scaleX(-1);}
+    .holo-bl{bottom:0;left:0;transform:scaleY(-1);}
+    .holo-br{bottom:0;right:0;transform:scale(-1,-1);}
 
-    /* ── Utility ── */
-    .mt-8 { margin-top:8px; }
-    ::-webkit-scrollbar { width:6px; }
-    ::-webkit-scrollbar-track { background:var(--black); }
-    ::-webkit-scrollbar-thumb { background:rgba(0,229,200,.3); border-radius:3px; }
-
-    /* ── Reveal animation ── */
-    .reveal { opacity:0; transform:translateY(32px); transition:opacity .7s ease, transform .7s ease; }
-    .reveal.visible { opacity:1; transform:translateY(0); }
-
-    /* Hero scan line */
-    .hero-scan {
-      position:absolute; left:0; right:0; height:1px;
-      background:linear-gradient(90deg,transparent,var(--aqua-glow),transparent);
-      opacity:.35; pointer-events:none;
-      animation:scanY 5s linear infinite;
-    }
-    @keyframes scanY { 0%{top:10%} 100%{top:90%} }
-
-    /* Floating WhatsApp FAB */
-    #whatsapp-fab {
-      position:fixed; bottom:24px; right:24px; z-index:800;
-      width:52px; height:52px; border-radius:50%;
-      background:#25d366;
-      display:flex; align-items:center; justify-content:center;
-      box-shadow:0 4px 24px rgba(37,211,102,.4);
-      transition:transform .3s, box-shadow .3s;
-      text-decoration:none;
-    }
-    #whatsapp-fab:hover {
-      transform:scale(1.12);
-      box-shadow:0 4px 40px rgba(37,211,102,.7);
-    }
-    #whatsapp-fab svg { width:26px; height:26px; }
-
-    @media(max-width:640px){
-      .dropbtn { font-size:.78rem; padding:7px 10px; letter-spacing:.5px; }
-      .logo-section h2 { font-size:.85rem; letter-spacing:1px; }
+    @media(max-width:650px){
+      nav{padding:10px 14px;flex-wrap:wrap;gap:6px;}
+      .nav-links{gap:5px;}
+      .dropbtn{padding:6px 12px;font-size:.68rem;letter-spacing:1px;}
+      main{padding:120px 12px 70px;}
+      .dropdown-content.rooms{width:96vw;left:-10vw;}
+      .logo-section h2{font-size:.85rem;}
     }
   </style>
 </head>
 <body>
 
-  <!-- Custom Cursor -->
-  <div id="cursor"></div>
-  <div id="cursor-ring"></div>
+  <!-- CUSTOM CURSOR -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
 
-  <!-- Lightbox -->
-  <div id="lightbox" role="dialog" aria-modal="true">
-    <button id="lightbox-close" aria-label="Close">✕</button>
-    <img id="lightbox-img" src="" alt="Room preview">
+  <!-- LIGHTBOX -->
+  <div id="lightbox" onclick="closeLightbox()">
+    <span id="lb-close" onclick="closeLightbox()">&#x2715;</span>
+    <img id="lb-img" src="" alt="">
   </div>
 
-  <!-- NAV -->
+  <!-- HOLOGRAPHIC CORNER DECO -->
+  <div class="holo-corner holo-tl">
+    <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+      <polyline points="0,80 0,0 80,0" fill="none" stroke="rgba(245,200,66,.8)" stroke-width="1.5"/>
+      <polyline points="0,60 0,0 60,0" fill="none" stroke="rgba(0,229,255,.5)" stroke-width="1"/>
+      <polyline points="0,40 0,0 40,0" fill="none" stroke="rgba(245,200,66,.3)" stroke-width=".5"/>
+    </svg>
+  </div>
+  <div class="holo-corner holo-tr">
+    <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+      <polyline points="0,80 0,0 80,0" fill="none" stroke="rgba(245,200,66,.8)" stroke-width="1.5"/>
+      <polyline points="0,60 0,0 60,0" fill="none" stroke="rgba(0,229,255,.5)" stroke-width="1"/>
+    </svg>
+  </div>
+  <div class="holo-corner holo-bl">
+    <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+      <polyline points="0,80 0,0 80,0" fill="none" stroke="rgba(245,200,66,.8)" stroke-width="1.5"/>
+      <polyline points="0,60 0,0 60,0" fill="none" stroke="rgba(0,229,255,.5)" stroke-width="1"/>
+    </svg>
+  </div>
+  <div class="holo-corner holo-br">
+    <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+      <polyline points="0,80 0,0 80,0" fill="none" stroke="rgba(245,200,66,.8)" stroke-width="1.5"/>
+      <polyline points="0,60 0,0 60,0" fill="none" stroke="rgba(0,229,255,.5)" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <!-- GRID OVERLAY -->
+  <div class="grid-overlay"></div>
+
+  <!-- SCANNING LINE -->
+  <div class="scan-line"></div>
+
+  <!-- SAHARA SUNSET BACKGROUND -->
+  <div class="sahara-bg">
+    <div class="sun"></div>
+    <div class="sun-ring"></div>
+    <div class="sun-ring"></div>
+    <div class="sun-ring"></div>
+    <div class="horizon"></div>
+    <div class="heat-shimmer"></div>
+    <div class="stars" id="starsContainer"></div>
+    <!-- Futuristic dunes with data-city horizon -->
+    <div class="dunes">
+      <svg viewBox="0 0 1440 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- City skyline layer -->
+        <g fill="rgba(8,3,0,0.85)">
+          <!-- Futuristic towers -->
+          <rect x="60" y="100" width="8" height="60"/>
+          <rect x="58" y="95" width="12" height="8"/>
+          <rect x="56" y="90" width="4" height="10"/>
+          <rect x="64" y="90" width="4" height="10"/>
+          <rect x="62" y="82" width="2" height="12"/>
+          <rect x="120" y="80" width="14" height="80"/>
+          <rect x="117" y="72" width="20" height="10"/>
+          <rect x="124" y="60" width="6" height="22"/>
+          <rect x="126" y="52" width="2" height="12"/>
+          <rect x="220" y="90" width="10" height="70"/>
+          <rect x="217" y="82" width="16" height="10"/>
+          <rect x="222" y="74" width="6" height="10"/>
+          <rect x="400" y="70" width="20" height="90"/>
+          <rect x="396" y="60" width="28" height="12"/>
+          <rect x="406" y="45" width="8" height="20"/>
+          <rect x="409" y="38" width="2" height="10"/>
+          <rect x="560" y="85" width="12" height="75"/>
+          <rect x="557" y="78" width="18" height="9"/>
+          <rect x="563" y="68" width="6" height="14"/>
+          <rect x="680" y="60" width="24" height="100"/>
+          <rect x="676" y="50" width="32" height="12"/>
+          <rect x="686" y="34" width="12" height="20"/>
+          <rect x="691" y="26" width="2" height="12"/>
+          <rect x="800" y="88" width="10" height="72"/>
+          <rect x="797" y="80" width="16" height="10"/>
+          <rect x="920" y="72" width="18" height="88"/>
+          <rect x="916" y="62" width="26" height="12"/>
+          <rect x="924" y="48" width="10" height="18"/>
+          <rect x="928" y="40" width="2" height="12"/>
+          <rect x="1060" y="82" width="12" height="78"/>
+          <rect x="1057" y="74" width="18" height="10"/>
+          <rect x="1063" y="62" width="6" height="16"/>
+          <rect x="1200" y="65" width="22" height="95"/>
+          <rect x="1196" y="55" width="30" height="12"/>
+          <rect x="1206" y="40" width="10" height="20"/>
+          <rect x="1210" y="32" width="2" height="12"/>
+          <rect x="1360" y="78" width="14" height="82"/>
+          <rect x="1357" y="70" width="20" height="10"/>
+          <rect x="1363" y="60" width="8" height="14"/>
+        </g>
+        <!-- Window lights on towers -->
+        <g fill="rgba(245,200,66,0.5)">
+          <rect x="62" y="110" width="2" height="2"/><rect x="66" y="110" width="2" height="2"/>
+          <rect x="62" y="120" width="2" height="2"/><rect x="66" y="120" width="2" height="2"/>
+          <rect x="122" y="95" width="2" height="2"/><rect x="128" y="95" width="2" height="2"/>
+          <rect x="122" y="108" width="2" height="2"/><rect x="128" y="108" width="2" height="2"/>
+          <rect x="402" y="82" width="2" height="2"/><rect x="408" y="82" width="2" height="2"/><rect x="414" y="82" width="2" height="2"/>
+          <rect x="402" y="95" width="2" height="2"/><rect x="408" y="95" width="2" height="2"/><rect x="414" y="95" width="2" height="2"/>
+          <rect x="682" y="72" width="2" height="2"/><rect x="688" y="72" width="2" height="2"/><rect x="694" y="72" width="2" height="2"/>
+          <rect x="682" y="85" width="2" height="2"/><rect x="688" y="85" width="2" height="2"/>
+          <rect x="922" y="85" width="2" height="2"/><rect x="928" y="85" width="2" height="2"/><rect x="934" y="85" width="2" height="2"/>
+          <rect x="1202" y="78" width="2" height="2"/><rect x="1208" y="78" width="2" height="2"/><rect x="1214" y="78" width="2" height="2"/>
+        </g>
+        <!-- Cyan accent lights on antennae -->
+        <g fill="rgba(0,229,255,0.8)">
+          <circle cx="63" cy="82" r="1.5"/><circle cx="127" cy="52" r="1.5"/>
+          <circle cx="410" cy="38" r="2"/><circle cx="692" cy="26" r="2"/>
+          <circle cx="929" cy="40" r="1.5"/><circle cx="1211" cy="32" r="2"/>
+        </g>
+        <!-- Dune silhouette layer 1 -->
+        <path d="M0,200 L0,130 Q100,72 200,118 Q320,162 440,96 Q560,34 680,86 Q800,132 900,76 Q1020,24 1140,78 Q1280,138 1440,100 L1440,200 Z" fill="rgba(30,12,0,0.92)"/>
+        <!-- Dune silhouette layer 2 -->
+        <path d="M0,200 L0,158 Q120,110 240,148 Q380,182 500,138 Q620,90 740,130 Q860,168 980,122 Q1100,80 1220,124 Q1340,165 1440,140 L1440,200 Z" fill="rgba(12,5,0,0.96)"/>
+        <!-- Ground layer -->
+        <path d="M0,200 L0,175 Q180,148 360,172 Q540,196 720,165 Q900,134 1080,170 Q1260,198 1440,160 L1440,200 Z" fill="rgba(5,2,0,1)"/>
+        <!-- Horizon glow line -->
+        <line x1="0" y1="130" x2="1440" y2="130" stroke="rgba(245,200,66,0.06)" stroke-width="1"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- BIG 5 SAFARI CANVAS -->
+  <canvas id="safariCanvas"></canvas>
+
+  <!-- DUST PARTICLES -->
+  <div class="dust-container" id="dustContainer"></div>
+
   <nav>
     <div class="logo-section">
-      <img src="sara1.jpg" alt="Sara Rentals Logo">
-      <h2>SARA RENTALS</h2>
+      <img src="sara1.jpg" alt="Sara Nest">
+      <h2>SARA NEST</h2>
     </div>
-
     <div class="nav-links">
- <a href="sararentals2.html"  style="text-decoration: none;" ><button class="dropbtn">Different veiw</button>
-  </a>
-      <!-- Room Images Dropdown -->
       <div class="dropdown">
-        <button class="dropbtn">🏠 Gallery</button>
-        <div class="dropdown-content gallery">
+        <button class="dropbtn">⬡ PROPERTIES</button>
+        <div class="dropdown-content rooms">
 
+          <!-- KILIFI / PAZURI -->
           <div class="room-section">
-            <h3>Along Mombasa Road Accommodations</h3>
+            <h3>🌊 Kilifi — Pazuri at Vipingo (Coast)</h3>
+            <div class="prop-panel">
+              <h4>Why Invest in Pazuri at Vipingo?</h4>
+              <div>
+                <span class="prop-tag">World-class Golf – Vipingo Ridge</span>
+                <span class="prop-tag">Direct flights Nairobi–Vipingo</span>
+                <span class="prop-tag">Indian Ocean roof terrace views</span>
+                <span class="prop-tag">New mall 2km away</span>
+                <span class="prop-tag">24/7 Security</span>
+                <span class="prop-tag">Managed rentals available</span>
+                <span class="prop-tag">Large garden areas</span>
+                <span class="prop-tag">Multiple house types</span>
+              </div>
+              <div class="prop-price">📍 Vipingo, Kilifi County, Coast Kenya</div>
+            </div>
+            <div class="prop-panel">
+              <h4>🛏 Accommodation – Bed Only Rates</h4>
+              <div style="overflow-x:auto;">
+                <table class="acc-table">
+                  <thead><tr><th>Unit Type</th><th>Off-Peak/Night</th><th>Peak Season/Night</th></tr></thead>
+                  <tbody>
+                    <tr><td>2 Bedroom Bungalow</td><td class="price-val">Kshs. 15,000</td><td class="price-val mortgage">Kshs. 25,000</td></tr>
+                    <tr><td>3 Bedroom Bungalow</td><td class="price-val">Kshs. 20,000</td><td class="price-val mortgage">Kshs. 30,000</td></tr>
+                    <tr><td>4 Bedroom Super Villa</td><td class="price-val">Kshs. 35,000</td><td class="price-val mortgage">Kshs. 45,000</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="prop-price" style="margin-top:8px;">📞 Reservations: 0713 582 460 · <a href="saranabatanzi058@gmail.com" style="color:var(--gold)">info@saranest.co.ke</a></div>
+            </div>
+            <div class="prop-panel">
+              <h4>✅ Amenities Included</h4>
+              <div>
+                <span class="prop-tag">Bar & Restaurant</span><span class="prop-tag">Swimming Pool</span>
+                <span class="prop-tag">Private Beach</span><span class="prop-tag">Rooftop Terrace</span>
+                <span class="prop-tag">Wi-Fi & TV</span><span class="prop-tag">Air Conditioning</span>
+                <span class="prop-tag">24/7 Security</span><span class="prop-tag">Room Service</span>
+                <span class="prop-tag">Free Parking</span><span class="prop-tag">Conference (6 pax)</span>
+                <span class="prop-tag">Outdoor Dining</span><span class="prop-tag">Spacious Garden</span>
+              </div>
+            </div>
             <div class="room-images">
-              <img src="am1.jpg"  alt="Building view 1">
-              <img src="am2.jpg" alt="Building view 2">
-              <img src="am3.jpg"  alt="Building view 1">
-              <img src="am4.jpg" alt="Building view 2">
-             
+              <img src="k1.jpg" alt="Kilifi 1" onclick="openLightbox(this)">
+              <img src="k2.jpg" alt="Kilifi 2" onclick="openLightbox(this)">
+              <img src="k3.jpg" alt="Kilifi 3" onclick="openLightbox(this)">
+              <img src="k4.jpg" alt="Kilifi 4" onclick="openLightbox(this)">
+              <img src="k5.jpg" alt="Kilifi 5" onclick="openLightbox(this)">
+              <img src="k6.jpg" alt="Kilifi 6" onclick="openLightbox(this)">
+              <img src="k7.jpg" alt="Kilifi 7" onclick="openLightbox(this)">
+              <img src="k8.jpg" alt="Kilifi 8" onclick="openLightbox(this)">
+              <img src="k9.jpg" alt="Kilifi 9" onclick="openLightbox(this)">
+              <img src="k10.jpg" alt="Kilifi 10" onclick="openLightbox(this)">
+              <img src="k11.jpg" alt="Kilifi 11" onclick="openLightbox(this)">
+              <img src="k12.jpg" alt="Kilifi 12" onclick="openLightbox(this)">
+              <img src="k13.jpg" alt="Kilifi 13" onclick="openLightbox(this)">
+              <img src="k14.jpg" alt="Kilifi 14" onclick="openLightbox(this)">
+              <img src="k15.jpg" alt="Kilifi 15" onclick="openLightbox(this)">
             </div>
           </div>
 
+          <!-- EASTERNVILLE -->
           <div class="room-section">
-            <h3>Athi River Accommodation</h3>
+            <h3>🏙 EasternVille — Mombasa Road</h3>
+            <div class="prop-summary">4-Bedroom villas near Nairobi CBD · Show House Ready · From Kshs. 14.5M</div>
+            <div class="prop-panel">
+              <h4>Features at EasternVille</h4>
+              <div>
+                <span class="prop-tag">4BR All Ensuite</span>
+                <span class="prop-tag">Semi-open plan kitchen</span>
+                <span class="prop-tag">Family room</span>
+                <span class="prop-tag">Roof Terrace</span>
+                <span class="prop-tag">2 Parking Spaces</span>
+              </div>
+              <div class="prop-price">💰 Starting from: <span>Kshs. 14.5M</span> · Contact: 0713 582 460</div>
+            </div>
+            <div class="prop-panel">
+              <h4>Amenities at EasternVille</h4>
+              <div>
+                <span class="prop-tag">Day Care Centre</span><span class="prop-tag">Sports Arena</span>
+                <span class="prop-tag">Basketball Court</span><span class="prop-tag">Tennis Court</span>
+                <span class="prop-tag">Football Pitch</span><span class="prop-tag">Gym</span>
+                <span class="prop-tag">Swimming Pool</span><span class="prop-tag">Leisure Park</span>
+                <span class="prop-tag">Kids Play Area</span><span class="prop-tag">Skating Rink</span>
+                <span class="prop-tag">Convenience Store</span><span class="prop-tag">Beauty Parlor</span>
+              </div>
+            </div>
             <div class="room-images">
-              <img src="ar1.jpg"  alt="1 Bed 1">
-              <img src="ar2.jpg" alt="1 Bed 2">
-              <img src="ar3.jpg" alt="1 Bed 3">
-              <img src="ar4.jpg"  alt="1 Bed 1">
-              <img src="ar5.jpg" alt="1 Bed 2">
-              <img src="ar6.jpg" alt="1 Bed 3">
-              <img src="ar7.jpg"  alt="1 Bed 1">
-              <img src="ar8.jpg" alt="1 Bed 2">
-              <img src="ar9.jpg" alt="1 Bed 3">
-              <img src="ar10.jpg"  alt="1 Bed 1">
-              <img src="ar11.jpg" alt="1 Bed 2">
-              <img src="ar12.jpg" alt="1 Bed 3">
-              <img src="ar13.jpg" alt="1 Bed 2">
-              <img src="ar14.jpg" alt="1 Bed 3">
-              <img src="ar15.jpg" alt="1 Bed 3">
-              <img src="ar16.jpg" alt="1 Bed 2">
-              <img src="ar17.jpg" alt="1 Bed 3">
-             
-              
+              <img src="am1.jpg" alt="EasternVille 1" onclick="openLightbox(this)">
+              <img src="am2.jpg" alt="EasternVille 2" onclick="openLightbox(this)">
+              <img src="am3.jpg" alt="EasternVille 3" onclick="openLightbox(this)">
+              <img src="am4.jpg" alt="EasternVille 4" onclick="openLightbox(this)">
             </div>
           </div>
 
+          <!-- LUKENYA PLAINS -->
           <div class="room-section">
-            <h3>Lukenya Accommodations</h3>
+            <h3>🌿 Lukenya Plains — Mombasa Road, Athi River</h3>
+            <div class="prop-summary">Master-planned gated community · 20 min from JKIA · 7km from Namanga Interchange</div>
+            <div class="prop-panel">
+              <h4>Available House Types & Prices</h4>
+              <div style="overflow-x:auto;">
+                <table class="acc-table">
+                  <thead><tr><th>Type</th><th>Size</th><th>Instalment</th><th>Mortgage</th></tr></thead>
+                  <tbody>
+                    <tr><td>3BR Semi-detached (Standard)</td><td>160 m²</td><td class="price-val">18.18M</td><td class="price-val mortgage">19.08M</td></tr>
+                    <tr><td>3BR Semi-detached (Super)</td><td>182 m²</td><td class="price-val">20.28M</td><td class="price-val mortgage">21.28M</td></tr>
+                    <tr><td>3BR Maisonette</td><td>168 m²</td><td class="price-val">22.48M</td><td class="price-val mortgage">23.48M</td></tr>
+                    <tr><td>4BR Maisonette</td><td>204 m²</td><td class="price-val">25.98M</td><td class="price-val mortgage">27.28M</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="prop-panel">
+              <h4>Standard 3BR Maisonette Features</h4>
+              <div>
+                <span class="prop-tag">160 m²</span><span class="prop-tag">Master Ensuite</span>
+                <span class="prop-tag">Laundry Area</span><span class="prop-tag">Solar Water Heating</span>
+                <span class="prop-tag">Dining & Lounge</span><span class="prop-tag">Servants' Quarters</span>
+                <span class="prop-tag">2 Car Parking</span><span class="prop-tag">Manicured Gardens</span>
+              </div>
+            </div>
+            <div class="prop-panel">
+              <h4>Super 3BR / 4BR Extra Features</h4>
+              <div>
+                <span class="prop-tag">All Bedrooms Ensuite</span>
+                <span class="prop-tag">Walk-in Closet</span>
+                <span class="prop-tag">1 BR Ground Floor</span>
+                <span class="prop-tag">Master + 1–2 BR Upper Level</span>
+              </div>
+            </div>
             <div class="room-images">
-              <img src="l1.jpg" alt="Bedsitter 1">
-              <img src="l2.jpg" alt="Bedsitter 2">
-              <img src="l3.jpg" alt="Bedsitter 3">
-              <img src="l4.jpg" alt="Bedsitter 4">
-              <img src="l5.jpg" alt="Bedsitter 5">
-              <img src="l6.jpg" alt="Bedsitter 4">
-              <img src="l7.jpg" alt="Bedsitter 5">
-              <img src="l8.jpg" alt="Bedsitter 4">
-              
+              <img src="l1.jpg" alt="Lukenya 1" onclick="openLightbox(this)">
+              <img src="l2.jpg" alt="Lukenya 2" onclick="openLightbox(this)">
+              <img src="l3.jpg" alt="Lukenya 3" onclick="openLightbox(this)">
+              <img src="l4.jpg" alt="Lukenya 4" onclick="openLightbox(this)">
+              <img src="l5.jpg" alt="Lukenya 5" onclick="openLightbox(this)">
+              <img src="l6.jpg" alt="Lukenya 6" onclick="openLightbox(this)">
+              <img src="l7.jpg" alt="Lukenya 7" onclick="openLightbox(this)">
+              <img src="l8.jpg" alt="Lukenya 8" onclick="openLightbox(this)">
             </div>
           </div>
 
+          <!-- GREENPARK ESTATE -->
           <div class="room-section">
-            <h3>Kirifi Accommodations</h3>
+            <h3>🏡 Greenpark Estate — Mombasa Road (Short Stay)</h3>
+            <div class="prop-summary">East Africa's first master-planned gated estate · 163 acres · 700+ homes · SOLD OUT for purchase – Short stays available</div>
+            <div class="prop-panel">
+              <h4>Short Stay – Home Away From Home</h4>
+              <div>
+                <span class="prop-tag">Fully Furnished Units</span>
+                <span class="prop-tag">Daily Housekeeping</span>
+                <span class="prop-tag">Lush Expansive Garden</span>
+                <span class="prop-tag">Patio & Gazebo</span>
+                <span class="prop-tag">Tranquil Atmosphere</span>
+                <span class="prop-tag">20 min from JKIA</span>
+                <span class="prop-tag">30 min Nairobi CBD via SGR</span>
+              </div>
+              <div class="prop-price">📞 To book short stays: 0713 582 460</div>
+            </div>
+            <div class="prop-panel">
+              <h4>Estate Security & Amenities</h4>
+              <div>
+                <span class="prop-tag">Secured Perimeter Wall</span>
+                <span class="prop-tag">Electric Fence</span>
+                <span class="prop-tag">Security Barrier Gates (per cluster)</span>
+                <span class="prop-tag">Borehole Water Supply</span>
+                <span class="prop-tag">Two Schools Within Estate</span>
+                <span class="prop-tag">Children Playgrounds</span>
+              </div>
+            </div>
             <div class="room-images">
-              <img src="k1.jpg" alt="Single 1">
-              <img src="k2.jpg" alt="Single 2">
-              <img src="k3.jpg" alt="Single 1">
-              <img src="k4.jpg" alt="Single 2">
-              <img src="k5.jpg" alt="Single 1">
-              <img src="k6.jpg" alt="Single 2">
-              <img src="k7.jpg" alt="Single 1">
-              <img src="k8.jpg" alt="Single 2">
-              <img src="k9.jpg" alt="Single 1">
-              <img src="k10.jpg" alt="Single 2">
-              <img src="k11.jpg" alt="Single 1">
-              <img src="k12.jpg" alt="Single 2">
-              <img src="k13.jpg" alt="Single 1">
-              <img src="k14.jpg" alt="Single 2">
-              <img src="k15.jpg" alt="Single 1">
-              
+              <img src="ar1.jpg" alt="Greenpark/Athi 1" onclick="openLightbox(this)">
+              <img src="ar2.jpg" alt="Greenpark/Athi 2" onclick="openLightbox(this)">
+              <img src="ar3.jpg" alt="Greenpark/Athi 3" onclick="openLightbox(this)">
+              <img src="ar4.jpg" alt="Greenpark/Athi 4" onclick="openLightbox(this)">
+              <img src="ar5.jpg" alt="Greenpark/Athi 5" onclick="openLightbox(this)">
+              <img src="ar6.jpg" alt="Greenpark/Athi 6" onclick="openLightbox(this)">
+              <img src="ar7.jpg" alt="Greenpark/Athi 7" onclick="openLightbox(this)">
+              <img src="ar8.jpg" alt="Greenpark/Athi 8" onclick="openLightbox(this)">
+              <img src="ar9.jpg" alt="Greenpark/Athi 9" onclick="openLightbox(this)">
+              <img src="ar10.jpg" alt="Greenpark/Athi 10" onclick="openLightbox(this)">
+              <img src="ar11.jpg" alt="Greenpark/Athi 11" onclick="openLightbox(this)">
+              <img src="ar12.jpg" alt="Greenpark/Athi 12" onclick="openLightbox(this)">
+              <img src="ar13.jpg" alt="Greenpark/Athi 13" onclick="openLightbox(this)">
+              <img src="ar14.jpg" alt="Greenpark/Athi 14" onclick="openLightbox(this)">
+              <img src="ar15.jpg" alt="Greenpark/Athi 15" onclick="openLightbox(this)">
+              <img src="ar16.jpg" alt="Greenpark/Athi 16" onclick="openLightbox(this)">
+              <img src="ar17.jpg" alt="Greenpark/Athi 17" onclick="openLightbox(this)">
             </div>
           </div>
 
         </div>
       </div>
 
-      <!-- Contact Dropdown -->
       <div class="dropdown">
-        <button class="dropbtn">📞 Contact</button>
-        <div class="dropdown-content small">
-          <span class="label">Reach Us</span>
-          <p>📱 +254 713 582 460</p>
-          <p>✉️ saranabatanzi058@gmail.com</p>
-          <div class="comm-buttons">
-            <a class="comm-btn whatsapp"
-               href="https://wa.me/254713582460?text=Hello%20Sara%20Rentals%2C%20I%20am%20interested%20in%20a%20room."
-               target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-                <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.116 1.528 5.843L0 24l6.335-1.509A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.865 0-3.618-.488-5.141-1.344l-.369-.213-3.76.896.952-3.653-.238-.385A9.946 9.946 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
-              </svg>
-              WhatsApp Us
-            </a>
-            <a class="comm-btn email"
-               href="mailto:saranabatanzi058@gmail.com?subject=Room%20Inquiry&body=Hello%2C%20I%20am%20interested%20in%20renting%20a%20room."
-               target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                <polyline points="22,6 12,13 2,6"/>
-              </svg>
-              Send Email
-            </a>
-            <a class="comm-btn sms"
-               href="sms:+254713582460?body=Hello%20Sara%20Rentals%2C%20I%20am%20interested%20in%20renting%20a%20room."
-               target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
-              </svg>
-              Send SMS
-            </a>
-          </div>
+        <button class="dropbtn">◈ CONTACT</button>
+        <div class="dropdown-content contact">
+          <p>📱 <strong style="color:var(--gold);font-family:'Orbitron',sans-serif;font-size:.82rem;">+254 713 582 460</strong></p>
+          <p>📧 <a href="mailto:info@saranest.co.ke" style="color:var(--gold)">saranabatanzi058@gmail.com</a></p>
+          <p>💬 WhatsApp available</p>
+          <p style="font-size:.75rem;color:rgba(212,166,84,.5);margin-top:6px;">Kilifi reservations:<br>0707 705 084</p>
         </div>
       </div>
 
-      <!-- Location Dropdown -->
       <div class="dropdown">
-        <button class="dropbtn">📍 Location</button>
-        <div class="dropdown-content small">
-          <span class="label">Find Us</span>
-          <p>🗺️ County: Kiambu</p>
-          <p>📌 Sub-County: Ruiru</p>
-          <p>🏘️ Location: Mwihoko</p>
-          <p>🛣️ Street: Kwa Jeshi</p>
-          <div class="comm-buttons mt-8">
-            <a class="comm-btn whatsapp"
-               href="https://maps.google.com/?q=Mwihoko+Ruiru+Kiambu"
-               target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/>
-                <circle cx="12" cy="10" r="3"/>
-              </svg>
-              Open in Maps
-            </a>
-          </div>
+        <button class="dropbtn">◉ LOCATIONS</button>
+        <div class="dropdown-content location">
+          <p>🌊 <strong style="color:var(--gold)">Kilifi</strong> – Vipingo, Coast</p>
+          <p>🏙 <strong style="color:var(--gold)">EasternVille</strong> – Mombasa Rd, Nairobi</p>
+          <p>🌿 <strong style="color:var(--gold)">Lukenya Plains</strong> – Athi River (7km Namanga)</p>
+          <p>🏡 <strong style="color:var(--gold)">Greenpark Estate</strong> – Mombasa Rd, 20min JKIA</p>
         </div>
       </div>
-
     </div>
   </nav>
 
-  <!-- HERO -->
-  <section id="hero">
-    <div class="orb orb1"></div>
-    <div class="orb orb2"></div>
-    <div class="orb orb3"></div>
-    <div class="kente-strip"></div>
-    <div class="hero-scan"></div>
-
-    <div class="hero-badge">Est. 2004 · Mwihoko, Ruiru · Kiambu</div>
-    <h1 class="hero-title">Welcome to<br><span>Sara Rentals</span></h1>
-    <p class="hero-sub">Comfort · Security · Community</p>
-    <div class="hero-cta">
-      <a href="#features" class="btn-primary">View Amenities</a>
-      <a href="https://wa.me/254713582460?text=Hello%20Sara%20Rentals%2C%20I%20am%20interested%20in%20a%20room."
-         class="btn-outline" target="_blank" rel="noopener">Enquire Now</a>
+  <main>
+    <div class="hero-banner">
+      <div class="hero-badge">◈ KENYA'S FINEST PROPERTY AGENCY ◈</div>
+      <h1>SARA NEST</h1>
+      <div class="hero-divider"><span>◆</span></div>
+      <p class="hero-subtitle">AirBnBs · Apartments · Estates · Investment Properties</p>
+      <p class="hero-tagline">Nairobi · Mombasa Road · Athi River · Kilifi Coast</p>
     </div>
-  </section>
 
-  <!-- STATS -->
-  <section id="stats">
-    <div class="stats-grid">
-      <div class="stat-box reveal">
-        <div class="stat-num">20+</div>
-        <div class="stat-label">Years of Service</div>
-      </div>
-      <div class="stat-box reveal">
-        <div class="stat-num">3</div>
-        <div class="stat-label">Room Types</div>
-      </div>
-      <div class="stat-box reveal">
-        <div class="stat-num">24/7</div>
-        <div class="stat-label">Security</div>
-      </div>
-      <div class="stat-box reveal">
-        <div class="stat-num">100%</div>
-        <div class="stat-label">Clean Water</div>
+    <!-- DATA TICKER -->
+    <div class="data-ticker">
+      <div class="ticker-track" id="tickerTrack">
+        <span class="ticker-item">PAZURI AT VIPINGO<span>▸</span>FROM KES 15,000/NIGHT</span>
+        <span class="ticker-item">EASTERNVILLE<span>▸</span>4BR FROM KES 14.5M</span>
+        <span class="ticker-item">LUKENYA PLAINS<span>▸</span>3BR FROM KES 18.18M</span>
+        <span class="ticker-item">GREENPARK ESTATE<span>▸</span>SHORT STAYS AVAILABLE</span>
+        <span class="ticker-item">KILIFI COAST<span>▸</span>DIRECT FLIGHTS NAIROBI</span>
+        <span class="ticker-item">24/7 SECURITY<span>▸</span>ALL PROPERTIES</span>
+        <span class="ticker-item">CALL: 0713 582 460<span>▸</span>WHATSAPP AVAILABLE</span>
+        <!-- duplicate for seamless loop -->
+        <span class="ticker-item">PAZURI AT VIPINGO<span>▸</span>FROM KES 15,000/NIGHT</span>
+        <span class="ticker-item">EASTERNVILLE<span>▸</span>4BR FROM KES 14.5M</span>
+        <span class="ticker-item">LUKENYA PLAINS<span>▸</span>3BR FROM KES 18.18M</span>
+        <span class="ticker-item">GREENPARK ESTATE<span>▸</span>SHORT STAYS AVAILABLE</span>
+        <span class="ticker-item">KILIFI COAST<span>▸</span>DIRECT FLIGHTS NAIROBI</span>
+        <span class="ticker-item">24/7 SECURITY<span>▸</span>ALL PROPERTIES</span>
+        <span class="ticker-item">CALL: 0713 582 460<span>▸</span>WHATSAPP AVAILABLE</span>
       </div>
     </div>
-  </section>
 
-  <!-- FEATURES -->
-  <section id="features">
+    <div class="kente-stripe">
+      <span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span>
+    </div>
+
+    <!-- PROPERTY SHOWCASE CARDS -->
     <div class="section-header reveal">
-      <span class="section-tag">Why Choose Us</span>
-      <h2 class="section-title">Living <em>Reimagined</em></h2>
-      <div class="section-line"></div>
+      <h2>Featured Properties</h2>
+      <p>CLICK "PROPERTIES" ABOVE FOR FULL DETAILS, IMAGES & PRICING</p>
+      <div class="section-divider"><span></span></div>
+    </div>
+
+    <div class="properties-grid">
+
+      <div class="prop-card reveal">
+        <div class="prop-img-wrap">
+          <img src="k1.jpg" alt="Pazuri at Vipingo">
+          <span class="prop-location-badge">◉ KILIFI COAST</span>
+          <span class="prop-type-badge">AIRBNB / HOLIDAY</span>
+        </div>
+        <div class="prop-body">
+          <div class="prop-name">Pazuri at Vipingo</div>
+          <div class="prop-desc">Beachside bungalows and villas with Indian Ocean views and access to world-class golf at Vipingo Ridge. Direct flights from Nairobi.</div>
+          <div class="prop-features">
+            <span class="feat-tag">Private Beach</span>
+            <span class="feat-tag">Golf Access</span>
+            <span class="feat-tag">Pool</span>
+            <span class="feat-tag">Roof Terrace</span>
+          </div>
+          <div class="prop-pricing">
+            <div class="price-row"><span class="price-label">2BR Off-Peak</span><span class="price-val">Kshs. 15,000/night</span></div>
+            <div class="price-row"><span class="price-label">2BR Peak</span><span class="price-val mortgage">Kshs. 25,000/night</span></div>
+            <div class="price-row"><span class="price-label">4BR Super Villa Peak</span><span class="price-val">Kshs. 45,000/night</span></div>
+          </div>
+          <a class="cta-btn" href="https://wa.me/254713582460?text=Hello%20Sara%20Nest%2C%20I%20am%20interested%20in%20Pazuri%20at%20Vipingo." target="_blank">🌊 Enquire Now</a>
+        </div>
+      </div>
+
+      <div class="prop-card reveal">
+        <div class="prop-img-wrap">
+          <img src="am1.jpg" alt="EasternVille">
+          <span class="prop-location-badge">◉ MOMBASA ROAD</span>
+          <span class="prop-type-badge">FOR SALE</span>
+        </div>
+        <div class="prop-body">
+          <div class="prop-name">EasternVille Villas</div>
+          <div class="prop-desc">Stylish 4-bedroom villas with rooftop terraces and a full lifestyle campus — gym, courts, pool and daycare all within the estate.</div>
+          <div class="prop-features">
+            <span class="feat-tag">4BR All Ensuite</span>
+            <span class="feat-tag">Roof Terrace</span>
+            <span class="feat-tag">Sports Arena</span>
+            <span class="feat-tag">Show House Ready</span>
+          </div>
+          <div class="prop-pricing">
+            <div class="price-row"><span class="price-label">Starting from</span><span class="price-val">Kshs. 14.5M</span></div>
+            <div class="price-row"><span class="price-label">Contact Agent</span><span class="price-val mortgage">0713 582 460</span></div>
+          </div>
+          <a class="cta-btn" href="https://wa.me/254713582460?text=Hello%20Sara%20Nest%2C%20I%20am%20interested%20in%20EasternVille." target="_blank">🏙 Enquire Now</a>
+        </div>
+      </div>
+
+      <div class="prop-card reveal">
+        <div class="prop-img-wrap">
+          <img src="l1.jpg" alt="Lukenya Plains">
+          <span class="prop-location-badge">◉ ATHI RIVER</span>
+          <span class="prop-type-badge">FOR SALE</span>
+        </div>
+        <div class="prop-body">
+          <div class="prop-name">Lukenya Plains</div>
+          <div class="prop-desc">Master-planned gated community 20 minutes from JKIA. Multiple maisonette types from 160–204 m² with solar water heating and manicured gardens.</div>
+          <div class="prop-features">
+            <span class="feat-tag">3–4 Bedrooms</span>
+            <span class="feat-tag">Solar Heating</span>
+            <span class="feat-tag">Gated & Secure</span>
+            <span class="feat-tag">Self-build Plots</span>
+          </div>
+          <div class="prop-pricing">
+            <div class="price-row"><span class="price-label">3BR Standard (Instalment)</span><span class="price-val">Kshs. 18.18M</span></div>
+            <div class="price-row"><span class="price-label">4BR Maisonette (Mortgage)</span><span class="price-val mortgage">Kshs. 27.28M</span></div>
+          </div>
+          <a class="cta-btn" href="https://wa.me/254713582460?text=Hello%20Sara%20Nest%2C%20I%20am%20interested%20in%20Lukenya%20Plains." target="_blank">🌿 Enquire Now</a>
+        </div>
+      </div>
+
+      <div class="prop-card reveal">
+        <div class="prop-img-wrap">
+          <img src="ar1.jpg" alt="Greenpark Estate">
+          <span class="prop-location-badge">◉ MOMBASA RD</span>
+          <span class="prop-type-badge">SHORT STAY</span>
+        </div>
+        <div class="prop-body">
+          <div class="prop-name">Greenpark Estate</div>
+          <div class="prop-desc">East Africa's first master-planned gated estate. 163 acres, 700+ homes. Serene short-stay units with daily housekeeping, gardens and patio.</div>
+          <div class="prop-features">
+            <span class="feat-tag">20 min JKIA</span>
+            <span class="feat-tag">Fully Furnished</span>
+            <span class="feat-tag">Borehole Water</span>
+            <span class="feat-tag">2 Schools Onsite</span>
+          </div>
+          <div class="prop-pricing">
+            <div class="price-row"><span class="price-label">Short Stay Enquiry</span><span class="price-val">0713 582 460</span></div>
+            <div class="price-row"><span class="price-label">Location</span><span class="price-val mortgage">2km from Lukenya</span></div>
+          </div>
+          <a class="cta-btn" href="https://wa.me/254713582460?text=Hello%20Sara%20Nest%2C%20I%20am%20interested%20in%20Greenpark%20Estate%20short%20stay." target="_blank">🏡 Enquire Now</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- WHY CHOOSE US -->
+    <div class="section-header reveal" style="margin-top:70px;">
+      <h2>Why Choose Sara Nest</h2>
+      <p>YOUR TRUSTED PROPERTY PARTNER ACROSS KENYA</p>
+      <div class="section-divider"><span></span></div>
     </div>
 
     <div class="features-grid">
-
-      <div class="feat-card reveal">
-        <div class="feat-img-wrap"><img src="water.jpg" alt="Water Supply"></div>
-        <div class="feat-body">
-          <div class="feat-icon">💧</div>
-          <h3>Clean Water Supply</h3>
-          <p>Enjoy abundant, clean, and potable water around the clock. Our water storage systems guarantee you never run dry — perfect refreshing showers, cooking, and everyday use.</p>
-        </div>
+      <div class="feature-card reveal">
+        <div class="card-img-wrap"><img src="water.jpg" alt="Water Supply"></div>
+        <div class="card-icon">💧</div>
+        <div class="card-title">Reliable Utilities</div>
+        <div class="card-text">All our listed properties come with borehole water supply, solar heating, and reliable power — no interruptions, no worries during your stay or investment.</div>
       </div>
-
-      <div class="feat-card reveal">
-        <div class="feat-img-wrap"><img src="security.jpg" alt="Security"></div>
-        <div class="feat-body">
-          <div class="feat-icon">🛡️</div>
-          <h3>Tight Security</h3>
-          <p>Your safety is our priority. Round-the-clock security personnel and systems ensure the protection of both you and your property at all times.</p>
-        </div>
+      <div class="feature-card reveal">
+        <div class="card-img-wrap"><img src="security.jpg" alt="Security"></div>
+        <div class="card-icon">🛡</div>
+        <div class="card-title">24/7 Security</div>
+        <div class="card-text">Every estate we represent features perimeter walls, electric fencing, barrier gates per cluster and on-ground security — your family and investment are always protected.</div>
       </div>
-
-      <div class="feat-card reveal">
-        <div class="feat-img-wrap"><img src="waste.jpg" alt="Waste Management"></div>
-        <div class="feat-body">
-          <div class="feat-icon">♻️</div>
-          <h3>Waste Management</h3>
-          <p>We operate a structured and disciplined waste disposal system, keeping our compound clean, hygienic, and environmentally responsible for all tenants.</p>
-        </div>
+      <div class="feature-card reveal">
+        <div class="card-img-wrap"><img src="waste.jpg" alt="Environment"></div>
+        <div class="card-icon">♻</div>
+        <div class="card-title">Managed Spaces</div>
+        <div class="card-text">Well-maintained compounds with professional waste management and landscaped gardens. We connect you to properties that take environmental standards seriously.</div>
       </div>
-
-      <div class="feat-card reveal">
-        <div class="feat-img-wrap"><img src="cleaning.jpg" alt="Clean Environment"></div>
-        <div class="feat-body">
-          <div class="feat-icon">✨</div>
-          <h3>Clean Environment</h3>
-          <p>From corridors to compound, Sara Rentals maintains a spotless, welcoming environment that you'll be proud to call home every single day.</p>
-        </div>
+      <div class="feature-card reveal">
+        <div class="card-img-wrap"><img src="cleaning.jpg" alt="Cleanliness"></div>
+        <div class="card-icon">✨</div>
+        <div class="card-title">Premium Standards</div>
+        <div class="card-text">From Kilifi coast villas to Nairobi estates, every property we list meets a premium standard for design, finish and community infrastructure.</div>
       </div>
-
     </div>
-  </section>
 
-  <!-- CULTURE SECTION -->
-  <section id="culture">
-    <div class="culture-inner">
-      <div class="culture-text reveal">
-        <div class="culture-badge">African Heritage · Ubuntu Spirit</div>
-        <h2>Built on the Spirit of <span>Community</span></h2>
-        <p>At Sara Rentals, we embrace the timeless African principle of Ubuntu — "I am because we are." Our compound is more than housing; it is a vibrant community where neighbours know each other, watch over one another, and thrive together.</p>
-        <p>Drawing from the warmth and hospitality of East African culture, we have created a home that feels alive with belonging, safety, and mutual respect — the true Ugandan and East African way of living well.</p>
-        <p>From the colour of our walls to the spirit of our management, every detail reflects a proud African identity fused with modern comforts.</p>
-        <a href="https://wa.me/254713582460?text=Hello%2C%20I%20want%20to%20know%20more%20about%20Sara%20Rentals."
-           class="btn-primary" style="margin-top:8px;display:inline-block" target="_blank" rel="noopener">
-          Talk to Us
+    <!-- CONTACT -->
+    <div class="contact-panel reveal">
+      <h2>Reach Sara Nest</h2>
+      <p class="contact-sub">◈ FIND YOUR DREAM PROPERTY TODAY ◈</p>
+      <div class="comm-buttons">
+        <a class="comm-btn btn-whatsapp"
+           href="https://wa.me/254713582460?text=Hello%20Sara%20Nest%2C%20I%20am%20interested%20in%20a%20property."
+           target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+            <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.846L0 24l6.336-1.501A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818c-1.909 0-3.686-.529-5.196-1.441l-.374-.222-3.76.891.925-3.657-.244-.386A9.817 9.817 0 012.182 12C2.182 6.576 6.576 2.182 12 2.182c5.424 0 9.818 4.394 9.818 9.818 0 5.424-4.394 9.818-9.818 9.818z"/>
+          </svg>
+          WhatsApp
+        </a>
+        <a class="comm-btn btn-email" href="mailto:saranabatanzi058@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="4" width="20" height="16" rx="2"/>
+            <path d="M2 7l10 7 10-7"/>
+          </svg>
+          Send Email
+        </a>
+        <a class="comm-btn btn-sms" href="sms:+254713582460?body=Hello%20Sara%20Nest%2C%20I%20am%20interested%20in%20a%20property.">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+          </svg>
+          Send SMS
+        </a>
+        <a class="comm-btn btn-call" href="tel:+254713582460">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+          </svg>
+          Call Us
         </a>
       </div>
-      <div class="culture-visual reveal">
-        <img src="pf.jpg" alt="Sara Rentals Building">
-      </div>
     </div>
-  </section>
+  </main>
 
-  <!-- FOOTER -->
   <footer>
-    <div class="kente-footer"></div>
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <h3>SARA RENTALS</h3>
-        <p>A place where comfort meets community. Your trusted home since 2004, rooted in the spirit of East Africa.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Location</h4>
-        <p>County: Kiambu</p>
-        <p>Sub-County: Ruiru</p>
-        <p>Location: Mwihoko</p>
-        <p>Street: Kwa Jeshi</p>
-      </div>
-      <div class="footer-col">
-        <h4>Contact</h4>
-        <p>📱 +254 792 035 839</p>
-        <a href="mailto:saranabatanzi058@gmail.com">✉️ saranabatanzi058@gmail.com</a>
-        <a href="https://wa.me/254713582460" target="_blank" rel="noopener">💬 WhatsApp</a>
-      </div>
-      <div class="footer-col">
-        <h4>Room Types</h4>
-        <p>One Bedroom</p>
-        <p>Bedsitter</p>
-        <p>Single Room</p>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>SARA RENTALS &copy; 2004 – 2025 &nbsp;·&nbsp; All Rights Reserved &nbsp;·&nbsp; Mwihoko, Ruiru, Kiambu</p>
-      <p style="margin-top:6px;font-size:.75rem;color:#3a6b62;">Built with Ubuntu Spirit 🌍</p>
-    </div>
+    <p>SARA NEST ◈ KENYA PROPERTY AGENTS</p>
+    <p>&copy; 2024–2026 &middot; Nairobi · Athi River · Kilifi Coast &middot; Built with pride in Africa 🌍</p>
   </footer>
 
-  <!-- Floating WhatsApp FAB -->
-  <a id="whatsapp-fab"
-     href="https://wa.me/254713582460?text=Hello%20Sara%20Rentals%2C%20I%20am%20interested%20in%20a%20room."
-     target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
-    <svg viewBox="0 0 24 24" fill="white">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-      <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.116 1.528 5.843L0 24l6.335-1.509A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.865 0-3.618-.488-5.141-1.344l-.369-.213-3.76.896.952-3.653-.238-.385A9.946 9.946 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
-    </svg>
-  </a>
-
-  <!-- Scroll to Top -->
-  <button id="scrollTop" aria-label="Scroll to top">↑</button>
-
   <script>
-    /* ── Custom Cursor ── */
-    const cur = document.getElementById('cursor');
-    const ring = document.getElementById('cursor-ring');
-    document.addEventListener('mousemove', e => {
-      cur.style.left  = e.clientX + 'px';
-      cur.style.top   = e.clientY + 'px';
-      setTimeout(() => {
-        ring.style.left = e.clientX + 'px';
-        ring.style.top  = e.clientY + 'px';
-      }, 80);
+  /* ── CUSTOM CURSOR ── */
+  (function(){
+    const c=document.getElementById('cursor');
+    const r=document.getElementById('cursorRing');
+    document.addEventListener('mousemove',e=>{
+      c.style.left=e.clientX+'px';c.style.top=e.clientY+'px';
+      r.style.left=e.clientX+'px';r.style.top=e.clientY+'px';
     });
-    document.querySelectorAll('a,button,img').forEach(el => {
-      el.addEventListener('mouseenter', () => { ring.style.width='52px'; ring.style.height='52px'; ring.style.opacity='.9'; });
-      el.addEventListener('mouseleave', () => { ring.style.width='36px'; ring.style.height='36px'; ring.style.opacity='.6'; });
+    document.querySelectorAll('a,button,[onclick]').forEach(el=>{
+      el.addEventListener('mouseenter',()=>{c.style.transform='translate(-50%,-50%) scale(2.5)';r.style.transform='translate(-50%,-50%) scale(1.5)';r.style.borderColor='rgba(0,229,255,.6)';});
+      el.addEventListener('mouseleave',()=>{c.style.transform='translate(-50%,-50%) scale(1)';r.style.transform='translate(-50%,-50%) scale(1)';r.style.borderColor='rgba(245,200,66,.5)';});
     });
+  })();
 
-    /* ── Floating Particles ── */
-    const hero = document.getElementById('hero');
-    for(let i=0;i<18;i++){
-      const p = document.createElement('div');
-      p.className = 'particle';
-      const s = Math.random()*6+3;
-      p.style.cssText = `
-        width:${s}px; height:${s}px;
-        left:${Math.random()*100}%;
-        animation-duration:${Math.random()*18+12}s;
-        animation-delay:${Math.random()*-20}s;
-        opacity:${Math.random()*.2+.05};
-      `;
-      hero.appendChild(p);
+  /* ── STARS ── */
+  (function(){
+    const sc=document.getElementById('starsContainer');
+    for(let i=0;i<100;i++){
+      const s=document.createElement('span');
+      const size=Math.random()*2.8+.4;
+      s.style.cssText=[
+        'width:'+size+'px','height:'+size+'px',
+        'top:'+Math.random()*100+'%',
+        'left:'+Math.random()*100+'%',
+        'animation-duration:'+(Math.random()*4+1.5)+'s',
+        'animation-delay:'+Math.random()*6+'s',
+        'opacity:'+Math.random()*.8
+      ].join(';');
+      sc.appendChild(s);
+    }
+  })();
+
+  /* ── DUST PARTICLES ── */
+  (function(){
+    const dc=document.getElementById('dustContainer');
+    function spawnDust(){
+      const d=document.createElement('div');
+      d.classList.add('dust');
+      const size=Math.random()*5+1.5;
+      d.style.cssText=[
+        'width:'+size+'px','height:'+size+'px',
+        'bottom:'+Math.random()*35+'%',
+        'left:'+Math.random()*100+'%',
+        'animation-duration:'+(Math.random()*20+10)+'s',
+        'animation-delay:'+Math.random()*14+'s',
+        '--dx:'+(Math.random()*220-110)+'px',
+        'opacity:'+Math.random()*.4
+      ].join(';');
+      dc.appendChild(d);
+    }
+    for(let i=0;i<55;i++) spawnDust();
+    setInterval(()=>{if(dc.children.length<55)spawnDust();},2000);
+  })();
+
+  /* ── BIG 5 SAFARI ANIMATION ── */
+  (function(){
+    const canvas=document.getElementById('safariCanvas');
+    const ctx=canvas.getContext('2d');
+    let W,H;
+    function resize(){
+      W=canvas.width=window.innerWidth;
+      H=canvas.height=canvas.parentElement?Math.floor(window.innerHeight*.30):200;
+    }
+    resize();
+    window.addEventListener('resize',resize);
+
+    function drawLion(x,y,scale,facing){
+      ctx.save();ctx.translate(x,y);
+      if(facing<0)ctx.scale(-1,1);ctx.scale(scale,scale);
+      ctx.fillStyle='rgba(90,50,10,0.9)';
+      ctx.beginPath();ctx.ellipse(0,0,38,18,0,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.ellipse(38,-8,16,14,0.2,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='rgba(60,30,5,0.85)';
+      ctx.beginPath();ctx.ellipse(38,-8,20,19,0.2,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='rgba(90,50,10,0.9)';
+      ctx.beginPath();ctx.ellipse(44,-10,13,11,0.2,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='rgba(130,80,30,0.9)';
+      ctx.beginPath();ctx.ellipse(54,-6,8,6,0,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='rgba(70,35,5,0.9)';
+      ctx.beginPath();ctx.ellipse(40,-19,5,6,-0.4,0,Math.PI*2);ctx.fill();
+      ctx.strokeStyle='rgba(80,45,8,0.8)';ctx.lineWidth=3;
+      ctx.beginPath();ctx.moveTo(-38,0);ctx.quadraticCurveTo(-52,-20,-48,-30);ctx.stroke();
+      ctx.fillStyle='rgba(80,45,8,0.85)';
+      [[-20,14],[-5,16],[10,15],[25,14]].forEach(([lx,ly])=>{ctx.fillRect(lx-4,ly,8,20);});
+      ctx.restore();
     }
 
-    /* ── Lightbox ── */
-    const lightbox   = document.getElementById('lightbox');
-    const lbImg      = document.getElementById('lightbox-img');
-    const lbClose    = document.getElementById('lightbox-close');
-
-    document.querySelectorAll('.room-images img').forEach(img => {
-      img.addEventListener('click', () => {
-        lbImg.src = img.src;
-        lbImg.alt = img.alt;
-        lightbox.classList.add('open');
-        document.body.style.overflow = 'hidden';
-      });
-    });
-    function closeLb(){
-      lightbox.classList.remove('open');
-      document.body.style.overflow = '';
+    function drawElephant(x,y,scale,facing){
+      ctx.save();ctx.translate(x,y);
+      if(facing<0)ctx.scale(-1,1);ctx.scale(scale,scale);
+      ctx.fillStyle='rgba(80,75,70,0.88)';
+      ctx.beginPath();ctx.ellipse(0,0,50,28,0,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.ellipse(52,-12,28,24,0,0,Math.PI*2);ctx.fill();
+      ctx.strokeStyle='rgba(70,65,60,0.9)';ctx.lineWidth=10;ctx.lineCap='round';
+      ctx.beginPath();ctx.moveTo(72,-4);ctx.quadraticCurveTo(88,10,82,28);ctx.stroke();
+      ctx.fillStyle='rgba(60,55,50,0.7)';
+      ctx.beginPath();ctx.ellipse(42,-10,15,22,-0.3,0,Math.PI*2);ctx.fill();
+      ctx.strokeStyle='rgba(240,230,200,0.85)';ctx.lineWidth=5;
+      ctx.beginPath();ctx.moveTo(74,-2);ctx.lineTo(92,8);ctx.stroke();
+      ctx.fillStyle='rgba(70,65,60,0.88)';
+      [[-28,22],[-10,26],[12,25],[30,22]].forEach(([lx,ly])=>{ctx.beginPath();ctx.roundRect(lx-8,ly,16,32,4);ctx.fill();});
+      ctx.strokeStyle='rgba(60,55,50,0.7)';ctx.lineWidth=4;
+      ctx.beginPath();ctx.moveTo(-50,5);ctx.quadraticCurveTo(-64,15,-60,28);ctx.stroke();
+      ctx.restore();
     }
-    lbClose.addEventListener('click', closeLb);
-    lightbox.addEventListener('click', e => { if(e.target===lightbox) closeLb(); });
-    document.addEventListener('keydown', e => { if(e.key==='Escape') closeLb(); });
 
-    /* ── Scroll Reveal ── */
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); } });
-    }, { threshold:.12 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    /* ── Scroll to Top ── */
-    const scrollBtn = document.getElementById('scrollTop');
-    window.addEventListener('scroll', () => {
-      scrollBtn.classList.toggle('show', window.scrollY > 350);
-    });
-    scrollBtn.addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
-
-    /* ── Smooth anchor scrolling ── */
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
-        const target = document.querySelector(a.getAttribute('href'));
-        if(target){ e.preventDefault(); target.scrollIntoView({behavior:'smooth'}); }
+    function drawGiraffe(x,y,scale,facing){
+      ctx.save();ctx.translate(x,y);
+      if(facing<0)ctx.scale(-1,1);ctx.scale(scale,scale);
+      ctx.fillStyle='rgba(190,130,40,0.9)';
+      ctx.beginPath();ctx.ellipse(0,30,30,18,0,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();
+      ctx.moveTo(-8,18);ctx.lineTo(-14,-50);ctx.lineTo(6,-54);ctx.lineTo(10,14);
+      ctx.closePath();ctx.fill();
+      ctx.beginPath();ctx.ellipse(-4,-58,14,9,0.1,0,Math.PI*2);ctx.fill();
+      ctx.strokeStyle='rgba(140,90,20,0.9)';ctx.lineWidth=4;
+      ctx.beginPath();ctx.moveTo(2,-65);ctx.lineTo(4,-78);ctx.moveTo(-10,-64);ctx.lineTo(-12,-76);ctx.stroke();
+      ctx.fillStyle='rgba(120,70,15,0.5)';
+      [[0,20,12,10],[10,35,8,9],[-15,32,10,8],[5,10,9,7]].forEach(([ex,ey,rx,ry])=>{
+        ctx.beginPath();ctx.ellipse(ex,ey,rx,ry,Math.random(),0,Math.PI*2);ctx.fill();
       });
-    });
+      ctx.fillStyle='rgba(180,120,35,0.88)';
+      [[-18,46],[-6,50],[8,49],[20,46]].forEach(([lx,ly])=>{ctx.fillRect(lx-4,ly,8,40);});
+      ctx.restore();
+    }
 
-    /* ── Stat counter animation ── */
-    function animateCounters() {
-      document.querySelectorAll('.stat-num').forEach(el => {
-        const text = el.textContent;
-        const num  = parseFloat(text.replace(/[^0-9.]/g,''));
-        const suffix = text.replace(/[0-9.]/g,'');
-        if(isNaN(num)) return;
-        let start = 0; const dur = 1800;
-        const step = timestamp => {
-          if(!start) start = timestamp;
-          const prog = Math.min((timestamp-start)/dur,1);
-          const ease = 1-Math.pow(1-prog,3);
-          el.textContent = (Math.floor(ease*num)) + suffix;
-          if(prog<1) requestAnimationFrame(step);
-        };
-        requestAnimationFrame(step);
+    function drawRhino(x,y,scale,facing){
+      ctx.save();ctx.translate(x,y);
+      if(facing<0)ctx.scale(-1,1);ctx.scale(scale,scale);
+      ctx.fillStyle='rgba(100,90,80,0.88)';
+      ctx.beginPath();ctx.ellipse(0,0,45,24,0,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.ellipse(46,-5,24,18,0.15,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='rgba(60,50,40,0.9)';
+      ctx.beginPath();ctx.moveTo(64,-12);ctx.lineTo(76,-26);ctx.lineTo(70,-8);ctx.closePath();ctx.fill();
+      ctx.beginPath();ctx.ellipse(38,-20,7,9,-0.3,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='rgba(90,80,70,0.9)';
+      [[-20,18],[-5,22],[10,21],[28,18]].forEach(([lx,ly])=>{ctx.beginPath();ctx.roundRect(lx-6,ly,12,22,3);ctx.fill();});
+      ctx.strokeStyle='rgba(80,70,60,0.7)';ctx.lineWidth=4;
+      ctx.beginPath();ctx.moveTo(-45,5);ctx.lineTo(-56,8);ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawBuffalo(x,y,scale,facing){
+      ctx.save();ctx.translate(x,y);
+      if(facing<0)ctx.scale(-1,1);ctx.scale(scale,scale);
+      ctx.fillStyle='rgba(40,32,24,0.9)';
+      ctx.beginPath();ctx.ellipse(0,0,40,22,0,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.ellipse(40,-4,22,18,0.1,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='rgba(30,22,14,0.9)';
+      ctx.beginPath();ctx.ellipse(34,-22,18,8,0,0,Math.PI*2);ctx.fill();
+      ctx.strokeStyle='rgba(20,15,10,0.9)';ctx.lineWidth=6;ctx.lineCap='round';
+      ctx.beginPath();ctx.moveTo(22,-22);ctx.quadraticCurveTo(10,-40,20,-44);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(48,-22);ctx.quadraticCurveTo(60,-40,50,-44);ctx.stroke();
+      ctx.fillStyle='rgba(55,40,28,0.85)';
+      ctx.beginPath();ctx.ellipse(56,-1,10,8,0,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='rgba(35,28,20,0.9)';
+      [[-20,16],[-5,20],[10,19],[26,16]].forEach(([lx,ly])=>{ctx.fillRect(lx-5,ly,10,22);});
+      ctx.restore();
+    }
+
+    const drawFns=[drawLion,drawElephant,drawGiraffe,drawRhino,drawBuffalo];
+    let animals=[];
+
+    function initAnimals(){
+      animals=[];
+      drawFns.forEach((fn)=>{
+        const facing=Math.random()>.5?1:-1;
+        animals.push({
+          draw:fn,
+          x:facing>0?Math.random()*(-W):(W+Math.random()*W),
+          baseY:H*0.55+Math.random()*H*.18,
+          scale:0.55+Math.random()*.25,
+          speed:(0.4+Math.random()*.4)*(facing>0?1:-1),
+          facing:facing,
+          bobOffset:Math.random()*Math.PI*2,
+          bobAmp:2+Math.random()*2,
+          bobSpeed:0.04+Math.random()*.02,
+          phase:0
+        });
       });
     }
-    const statsObs = new IntersectionObserver(entries => {
-      if(entries[0].isIntersecting){ animateCounters(); statsObs.disconnect(); }
-    }, {threshold:.3});
-    statsObs.observe(document.getElementById('stats'));
+    initAnimals();
+    window.addEventListener('resize',()=>{resize();initAnimals();});
+
+    function drawDustCloud(x,y,scale){
+      ctx.save();ctx.globalAlpha=0.1;
+      for(let i=0;i<4;i++){
+        ctx.fillStyle='rgba(212,166,84,1)';
+        ctx.beginPath();ctx.ellipse(x+i*8*scale,y+i*3,12*scale,6*scale,0,0,Math.PI*2);ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    let frame=0;
+    function animate(){
+      ctx.clearRect(0,0,W,H);
+      frame++;
+      const grd=ctx.createLinearGradient(0,H*.45,0,H);
+      grd.addColorStop(0,'rgba(60,25,0,0)');
+      grd.addColorStop(1,'rgba(5,2,0,0.6)');
+      ctx.fillStyle=grd;
+      ctx.fillRect(0,H*.45,W,H*.55);
+      const sorted=[...animals].sort((a,b)=>a.baseY-b.baseY);
+      sorted.forEach(a=>{
+        a.phase+=a.bobSpeed;a.x+=a.speed;
+        const bob=Math.sin(a.phase+a.bobOffset)*a.bobAmp;
+        const y=a.baseY+bob;
+        if(a.facing>0&&a.x>W+200){a.x=-200;}
+        if(a.facing<0&&a.x<-200){a.x=W+200;}
+        const dustX=a.facing>0?a.x-30*a.scale:a.x+30*a.scale;
+        drawDustCloud(dustX,y+18*a.scale,a.scale*.5);
+        a.draw(a.x,y,a.scale,a.facing);
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+  })();
+
+  /* ── LIGHTBOX ── */
+  function openLightbox(img){
+    document.getElementById('lb-img').src=img.src;
+    document.getElementById('lightbox').classList.add('active');
+  }
+  function closeLightbox(){
+    document.getElementById('lightbox').classList.remove('active');
+  }
+
+  /* ── SCROLL REVEAL ── */
+  (function(){
+    const obs=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');}});
+    },{threshold:.12});
+    document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+  })();
+
   </script>
 </body>
 </html>
