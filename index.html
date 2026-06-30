@@ -403,6 +403,103 @@
       .dropdown-content.rooms{width:96vw;left:-10vw;}
       .logo-section h2{font-size:.85rem;}
     }
+
+    /* ══════════════════════════════════════════════
+       SARA AI — in-app assistant widget
+       ══════════════════════════════════════════════ */
+    .ai-fab{position:fixed;bottom:26px;right:26px;width:60px;height:60px;z-index:500;
+      background:radial-gradient(circle at 30% 30%,var(--neon-gold),var(--amber) 60%,var(--rust) 100%);
+      border:1px solid rgba(245,200,66,.6);border-radius:50%;cursor:none;
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 0 24px rgba(245,200,66,.45),0 0 50px rgba(0,229,255,.12),0 8px 24px rgba(0,0,0,.5);
+      transition:transform .3s ease,box-shadow .3s ease;animation:aiPulse 3s ease-in-out infinite;}
+    .ai-fab:hover{transform:scale(1.08);box-shadow:0 0 36px rgba(245,200,66,.6),0 0 70px rgba(0,229,255,.18);}
+    @keyframes aiPulse{0%,100%{box-shadow:0 0 24px rgba(245,200,66,.45),0 0 50px rgba(0,229,255,.12);}50%{box-shadow:0 0 34px rgba(245,200,66,.65),0 0 70px rgba(0,229,255,.2);}}
+    .ai-fab svg{width:28px;height:28px;color:#1a0d00;}
+    .ai-fab .ai-dot{position:absolute;top:6px;right:6px;width:10px;height:10px;border-radius:50%;
+      background:var(--plasma);box-shadow:0 0 8px var(--plasma);display:none;}
+    .ai-fab .ai-dot.show{display:block;}
+
+    .ai-panel{position:fixed;bottom:100px;right:26px;width:380px;max-width:92vw;height:560px;max-height:75vh;
+      z-index:501;background:rgba(5,2,0,.96);border:1px solid rgba(245,200,66,.25);
+      backdrop-filter:blur(28px) saturate(1.6);display:none;flex-direction:column;overflow:hidden;
+      box-shadow:0 30px 90px rgba(0,0,0,.7),0 0 60px rgba(245,200,66,.08),inset 0 1px 0 rgba(245,200,66,.12);
+      clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,18px 100%,0 calc(100% - 18px));
+      animation:aiPanelIn .3s cubic-bezier(.22,.68,0,1.2);}
+    .ai-panel.open{display:flex;}
+    @keyframes aiPanelIn{from{opacity:0;transform:translateY(20px) scale(.96);}to{opacity:1;transform:translateY(0) scale(1);}}
+
+    .ai-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;
+      border-bottom:1px solid rgba(245,200,66,.15);background:rgba(0,0,0,.3);flex-shrink:0;}
+    .ai-header-title{display:flex;align-items:center;gap:10px;}
+    .ai-header-title .ai-avatar{width:30px;height:30px;border-radius:50%;
+      background:radial-gradient(circle at 30% 30%,var(--neon-gold),var(--rust));
+      display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0;}
+    .ai-header-title h3{font-family:'Orbitron',sans-serif;font-size:.78rem;color:var(--gold);letter-spacing:2px;}
+    .ai-header-title span{display:block;font-size:.62rem;color:rgba(127,255,212,.7);letter-spacing:1px;margin-top:2px;}
+    .ai-header-btns{display:flex;gap:6px;}
+    .ai-icon-btn{width:28px;height:28px;border-radius:0;background:rgba(245,200,66,.08);
+      border:1px solid rgba(245,200,66,.2);color:var(--gold);cursor:none;display:flex;align-items:center;justify-content:center;
+      transition:all .2s;clip-path:polygon(0 0,calc(100% - 5px) 0,100% 5px,100% 100%,5px 100%,0 calc(100% - 5px));}
+    .ai-icon-btn:hover{background:rgba(245,200,66,.2);box-shadow:0 0 12px rgba(245,200,66,.3);}
+    .ai-icon-btn svg{width:14px;height:14px;}
+
+    .ai-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;}
+    .ai-messages::-webkit-scrollbar{width:4px;}
+    .ai-messages::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px;}
+    .ai-msg{max-width:88%;padding:10px 14px;font-size:.8rem;line-height:1.55;
+      clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));}
+    .ai-msg.bot{align-self:flex-start;background:rgba(245,200,66,.07);border:1px solid rgba(245,200,66,.18);color:rgba(255,230,170,.92);}
+    .ai-msg.user{align-self:flex-end;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.22);color:rgba(220,250,255,.92);}
+    .ai-msg.system{align-self:center;background:rgba(255,255,255,.04);border:1px dashed rgba(245,200,66,.25);
+      color:rgba(212,166,84,.75);font-size:.72rem;text-align:center;}
+    .ai-msg.typing{display:flex;gap:4px;align-items:center;padding:12px 16px;}
+    .ai-msg.typing span{width:5px;height:5px;border-radius:50%;background:var(--gold);animation:aiTyping 1s infinite ease-in-out;}
+    .ai-msg.typing span:nth-child(2){animation-delay:.15s;}
+    .ai-msg.typing span:nth-child(3){animation-delay:.3s;}
+    @keyframes aiTyping{0%,60%,100%{opacity:.3;transform:translateY(0);}30%{opacity:1;transform:translateY(-3px);}}
+
+    .ai-suggestions{display:flex;flex-wrap:wrap;gap:6px;padding:0 16px 12px;flex-shrink:0;}
+    .ai-chip{font-size:.66rem;padding:6px 12px;background:rgba(245,200,66,.07);border:1px solid rgba(245,200,66,.2);
+      color:var(--gold);cursor:none;letter-spacing:.5px;font-family:'Exo 2',sans-serif;transition:all .2s;
+      clip-path:polygon(0 0,calc(100% - 5px) 0,100% 5px,100% 100%,5px 100%,0 calc(100% - 5px));}
+    .ai-chip:hover{background:rgba(245,200,66,.18);}
+
+    .ai-input-row{display:flex;gap:8px;padding:12px 16px;border-top:1px solid rgba(245,200,66,.15);
+      background:rgba(0,0,0,.25);flex-shrink:0;}
+    .ai-input-row input{flex:1;background:rgba(255,255,255,.04);border:1px solid rgba(245,200,66,.2);
+      color:var(--text);padding:10px 12px;font-size:.8rem;font-family:'Exo 2',sans-serif;outline:none;}
+    .ai-input-row input:focus{border-color:rgba(245,200,66,.5);}
+    .ai-input-row button{background:linear-gradient(135deg,var(--amber),var(--gold));border:none;
+      color:#1a0d00;padding:0 16px;font-family:'Orbitron',sans-serif;font-weight:700;font-size:.7rem;letter-spacing:1px;
+      cursor:none;clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px));}
+    .ai-input-row button:hover{filter:brightness(1.1);}
+    .ai-input-row button:disabled{opacity:.5;cursor:not-allowed;}
+
+    /* settings overlay inside panel */
+    .ai-settings{position:absolute;inset:0;background:rgba(5,2,0,.98);backdrop-filter:blur(20px);
+      display:none;flex-direction:column;padding:20px;z-index:5;overflow-y:auto;}
+    .ai-settings.open{display:flex;}
+    .ai-settings h4{font-family:'Orbitron',sans-serif;font-size:.78rem;color:var(--gold);letter-spacing:2px;margin-bottom:18px;text-transform:uppercase;}
+    .ai-settings label{font-size:.7rem;color:rgba(212,166,84,.7);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;display:block;}
+    .ai-settings input,.ai-settings select{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(245,200,66,.25);
+      color:var(--text);padding:10px 12px;font-size:.78rem;margin-bottom:16px;outline:none;font-family:'Exo 2',sans-serif;}
+    .ai-settings input:focus,.ai-settings select:focus{border-color:var(--gold);}
+    .ai-settings select option{background:#0a0500;}
+    .ai-settings .ai-note{font-size:.68rem;color:rgba(212,166,84,.5);line-height:1.6;margin-bottom:16px;border-left:2px solid var(--amber);padding-left:10px;}
+    .ai-settings-btns{display:flex;gap:10px;margin-top:auto;}
+    .ai-settings-btns button{flex:1;padding:10px;font-family:'Orbitron',sans-serif;font-size:.68rem;letter-spacing:1.5px;
+      cursor:none;border:1px solid rgba(245,200,66,.3);background:rgba(245,200,66,.08);color:var(--gold);text-transform:uppercase;}
+    .ai-settings-btns button.primary{background:linear-gradient(135deg,var(--amber),var(--gold));color:#1a0d00;border:none;font-weight:700;}
+    .ai-settings-btns button:hover{filter:brightness(1.15);}
+    .ai-key-status{font-size:.66rem;letter-spacing:1px;margin-bottom:14px;padding:6px 10px;border:1px solid rgba(245,200,66,.2);}
+    .ai-key-status.ok{color:#7fffd4;border-color:rgba(127,255,212,.3);}
+    .ai-key-status.missing{color:var(--sunset);border-color:rgba(255,107,53,.3);}
+
+    @media(max-width:480px){
+      .ai-panel{right:10px;left:10px;width:auto;bottom:90px;}
+      .ai-fab{right:18px;bottom:18px;}
+    }
   </style>
 </head>
 <body>
@@ -984,6 +1081,74 @@
     <p>&copy; 2024–2026 &middot; Nairobi · Athi River · Kilifi Coast &middot; Built with pride in Africa 🌍</p>
   </footer>
 
+  <!-- ══════════════════════════════════════════════
+       SARA AI — floating assistant button + panel
+       ══════════════════════════════════════════════ -->
+  <button class="ai-fab" id="aiFab" title="Ask Sara AI">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a1 1 0 011 1v1.06A8.004 8.004 0 0119.94 11H21a1 1 0 010 2h-1.06A8.004 8.004 0 0113 19.94V21a1 1 0 01-2 0v-1.06A8.004 8.004 0 014.06 13H3a1 1 0 010-2h1.06A8.004 8.004 0 0111 4.06V3a1 1 0 011-1zm0 4a6 6 0 100 12 6 6 0 000-12zm0 3a3 3 0 110 6 3 3 0 010-6z"/></svg>
+    <span class="ai-dot" id="aiDot"></span>
+  </button>
+
+  <div class="ai-panel" id="aiPanel">
+    <div class="ai-header">
+      <div class="ai-header-title">
+        <div class="ai-avatar">🛰</div>
+        <div>
+          <h3>SARA AI</h3>
+          <span>IN-APP ASSISTANT · GROQ</span>
+        </div>
+      </div>
+      <div class="ai-header-btns">
+        <button class="ai-icon-btn" id="aiSettingsBtn" title="Settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 005 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 005 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 5a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09A1.65 1.65 0 0015 5a1.65 1.65 0 001.82.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019 9c.21.4.51.74 1.51 1H21a2 2 0 010 4h-.09A1.65 1.65 0 0019.4 15z"/></svg>
+        </button>
+        <button class="ai-icon-btn" id="aiCloseBtn" title="Close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+
+      <!-- SETTINGS OVERLAY -->
+      <div class="ai-settings" id="aiSettings">
+        <h4>◈ Sara AI Settings</h4>
+        <div class="ai-key-status" id="aiKeyStatus">No API key configured</div>
+        <label for="aiApiKey">Groq API Key</label>
+        <input type="password" id="aiApiKey" placeholder="gsk_..." autocomplete="off">
+        <label for="aiModel">Model</label>
+        <select id="aiModel">
+          <option value="llama-3.3-70b-versatile">llama-3.3-70b-versatile (recommended)</option>
+          <option value="llama-3.1-8b-instant">llama-3.1-8b-instant (fastest)</option>
+          <option value="openai/gpt-oss-120b">openai/gpt-oss-120b</option>
+          <option value="openai/gpt-oss-20b">openai/gpt-oss-20b</option>
+          <option value="gemma2-9b-it">gemma2-9b-it</option>
+          <option value="qwen/qwen3-32b">qwen/qwen3-32b</option>
+        </select>
+        <div class="ai-note">
+          Your key is stored only in this browser (localStorage) and is never written into the page source.
+          Get / manage keys at console.groq.com. If a key was ever pasted into a chat, email, or public repo,
+          treat it as compromised and rotate it.
+        </div>
+        <div class="ai-settings-btns">
+          <button id="aiSettingsCancel">Cancel</button>
+          <button class="primary" id="aiSettingsSave">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ai-messages" id="aiMessages"></div>
+
+    <div class="ai-suggestions" id="aiSuggestions">
+      <div class="ai-chip" data-q="What's the price for a 2 bedroom bungalow at Pazuri in peak season?">Pazuri peak price</div>
+      <div class="ai-chip" data-q="What amenities does EasternVille have?">EasternVille amenities</div>
+      <div class="ai-chip" data-q="Compare Lukenya Plains house types and prices">Lukenya price compare</div>
+      <div class="ai-chip" data-q="How do I contact Sara Nest?">Contact info</div>
+    </div>
+
+    <div class="ai-input-row">
+      <input type="text" id="aiInput" placeholder="Ask about Sara Nest properties...">
+      <button id="aiSendBtn">SEND</button>
+    </div>
+  </div>
+
   <script>
   /* ── CUSTOM CURSOR ── */
   (function(){
@@ -1218,6 +1383,234 @@
       entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');}});
     },{threshold:.12});
     document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+  })();
+
+  /* ══════════════════════════════════════════════
+     SARA AI — assistant logic (Groq-powered, in-app scope only)
+     ══════════════════════════════════════════════ */
+  (function(){
+    const STORAGE_KEY = 'saranest_ai_key';
+    const STORAGE_MODEL = 'saranest_ai_model';
+    const DEFAULT_MODEL = 'llama-3.3-70b-versatile';
+    const GROQ_ENDPOINT = 'https://api.groq.com/openai/v1/chat/completions';
+
+    // ── Knowledge base: everything the AI is allowed to know, pulled from
+    // the data already shown on this page. Keep this in sync if you edit
+    // property details above — the assistant's scope is locked to this object.
+    const SARA_NEST_DATA = {
+      agency: {
+        name: "Sara Nest",
+        tagline: "AirBnBs · Apartments · Estates · Investment Properties",
+        coverage: "Nairobi · Mombasa Road · Athi River · Kilifi Coast",
+        phone: "0713 582 460 (+254 713 582 460)",
+        email: "saranabatanzi058@gmail.com",
+        channels: "WhatsApp, SMS, Phone Call, Email"
+      },
+      properties: [
+        {
+          name: "Pazuri at Vipingo",
+          location: "Vipingo, Kilifi County, Coast Kenya",
+          type: "Airbnb / Holiday short stay",
+          highlights: ["World-class golf at Vipingo Ridge","Direct flights Nairobi–Vipingo","Indian Ocean roof terrace views","New mall 2km away","24/7 security","Managed rentals available","Large garden areas","Multiple house types"],
+          pricing: {
+            "2 Bedroom Bungalow": {offPeak:"Kshs. 15,000/night", peak:"Kshs. 25,000/night"},
+            "3 Bedroom Bungalow": {offPeak:"Kshs. 20,000/night", peak:"Kshs. 30,000/night"},
+            "4 Bedroom Super Villa": {offPeak:"Kshs. 35,000/night", peak:"Kshs. 45,000/night"}
+          },
+          amenities: ["Bar & Restaurant","Swimming Pool","Private Beach","Rooftop Terrace","Wi-Fi & TV","Air Conditioning","24/7 Security","Room Service","Free Parking","Conference room (6 pax)","Outdoor Dining","Spacious Garden"],
+          reservations: "0713 582 460"
+        },
+        {
+          name: "EasternVille",
+          location: "Mombasa Road, near Nairobi CBD",
+          type: "For sale — 4-bedroom villas",
+          summary: "4-Bedroom villas near Nairobi CBD, show house ready, starting from Kshs. 14.5M",
+          features: ["4BR all ensuite","Semi-open plan kitchen","Family room","Roof terrace","2 parking spaces"],
+          pricing: {"Starting price": "Kshs. 14.5M"},
+          amenities: ["Day Care Centre","Sports Arena","Basketball Court","Tennis Court","Football Pitch","Gym","Swimming Pool","Leisure Park","Kids Play Area","Skating Rink","Convenience Store","Beauty Parlor"],
+          contact: "0713 582 460"
+        },
+        {
+          name: "Lukenya Plains",
+          location: "Mombasa Road, Athi River — 20 min from JKIA, 7km from Namanga Interchange",
+          type: "For sale — master-planned gated community",
+          pricing: {
+            "3BR Semi-detached (Standard, 160 m²)": {instalment:"18.18M", mortgage:"19.08M"},
+            "3BR Semi-detached (Super, 182 m²)": {instalment:"20.28M", mortgage:"21.28M"},
+            "3BR Maisonette (168 m²)": {instalment:"22.48M", mortgage:"23.48M"},
+            "4BR Maisonette (204 m²)": {instalment:"25.98M", mortgage:"27.28M"}
+          },
+          standardFeatures: ["Master ensuite","Laundry area","Solar water heating","Dining & lounge","Servants' quarters","2 car parking","Manicured gardens"],
+          superFeatures: ["All bedrooms ensuite","Walk-in closet","1 BR on ground floor","Master + 1-2 BR on upper level"]
+        },
+        {
+          name: "Greenpark Estate",
+          location: "Mombasa Road, 20 min from JKIA, ~2km from Lukenya, 30 min Nairobi CBD via SGR",
+          type: "Short stay only — purchase sold out",
+          summary: "East Africa's first master-planned gated estate. 163 acres, 700+ homes. Short stays available, not for sale.",
+          shortStayFeatures: ["Fully furnished units","Daily housekeeping","Lush expansive garden","Patio & gazebo","Tranquil atmosphere"],
+          security: ["Secured perimeter wall","Electric fence","Security barrier gates per cluster","Borehole water supply","Two schools within estate","Children playgrounds"],
+          booking: "0713 582 460"
+        }
+      ]
+    };
+
+    function buildSystemPrompt(){
+      return "You are Sara AI, the official in-app assistant for the Sara Nest property agency website. " +
+        "Your ONLY job is to help visitors with questions about Sara Nest's listed properties, pricing, amenities, locations and how to contact the agency, using ONLY the JSON data provided below. " +
+        "Do not answer questions unrelated to Sara Nest properties (general knowledge, other companies, coding, etc) — politely redirect those back to property questions. " +
+        "Never invent prices, units, or amenities that are not in the data. If something isn't in the data, say you don't have that detail and suggest contacting Sara Nest directly at 0713 582 460. " +
+        "Keep answers concise, warm, and helpful, formatted in short paragraphs or bullet points. Always quote prices in Kshs as given. " +
+        "Here is the complete scope of data you may use:\n\n" + JSON.stringify(SARA_NEST_DATA, null, 2);
+    }
+
+    let conversation = []; // {role, content}
+
+    function getKey(){ return localStorage.getItem(STORAGE_KEY) || ''; }
+    function getModel(){ return localStorage.getItem(STORAGE_MODEL) || DEFAULT_MODEL; }
+
+    const fab = document.getElementById('aiFab');
+    const dot = document.getElementById('aiDot');
+    const panel = document.getElementById('aiPanel');
+    const closeBtn = document.getElementById('aiCloseBtn');
+    const settingsBtn = document.getElementById('aiSettingsBtn');
+    const settingsPanel = document.getElementById('aiSettings');
+    const settingsCancel = document.getElementById('aiSettingsCancel');
+    const settingsSave = document.getElementById('aiSettingsSave');
+    const apiKeyInput = document.getElementById('aiApiKey');
+    const modelSelect = document.getElementById('aiModel');
+    const keyStatus = document.getElementById('aiKeyStatus');
+    const messagesEl = document.getElementById('aiMessages');
+    const inputEl = document.getElementById('aiInput');
+    const sendBtn = document.getElementById('aiSendBtn');
+    const suggestionsEl = document.getElementById('aiSuggestions');
+
+    function refreshKeyStatus(){
+      const k = getKey();
+      if(k){
+        keyStatus.textContent = '✓ API key configured (' + getModel() + ')';
+        keyStatus.className = 'ai-key-status ok';
+        dot.classList.add('show');
+      } else {
+        keyStatus.textContent = '⚠ No API key configured — tap settings to add one';
+        keyStatus.className = 'ai-key-status missing';
+        dot.classList.remove('show');
+      }
+    }
+
+    function addMessage(role, text){
+      const div = document.createElement('div');
+      div.className = 'ai-msg ' + role;
+      div.textContent = text;
+      messagesEl.appendChild(div);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+      return div;
+    }
+
+    function addTyping(){
+      const div = document.createElement('div');
+      div.className = 'ai-msg bot typing';
+      div.innerHTML = '<span></span><span></span><span></span>';
+      messagesEl.appendChild(div);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+      return div;
+    }
+
+    function openPanel(){
+      panel.classList.add('open');
+      if(messagesEl.children.length === 0){
+        addMessage('bot', "Hi! I'm Sara AI 🛰 — ask me anything about Pazuri at Vipingo, EasternVille, Lukenya Plains, or Greenpark Estate: pricing, amenities, locations, or how to reach the team.");
+      }
+      refreshKeyStatus();
+      inputEl.focus();
+    }
+    function closePanel(){ panel.classList.remove('open'); settingsPanel.classList.remove('open'); }
+
+    fab.addEventListener('click', ()=>{ panel.classList.contains('open') ? closePanel() : openPanel(); });
+    closeBtn.addEventListener('click', closePanel);
+
+    settingsBtn.addEventListener('click', ()=>{
+      apiKeyInput.value = getKey();
+      modelSelect.value = getModel();
+      settingsPanel.classList.add('open');
+    });
+    settingsCancel.addEventListener('click', ()=> settingsPanel.classList.remove('open'));
+    settingsSave.addEventListener('click', ()=>{
+      const key = apiKeyInput.value.trim();
+      const model = modelSelect.value;
+      if(key) localStorage.setItem(STORAGE_KEY, key); else localStorage.removeItem(STORAGE_KEY);
+      localStorage.setItem(STORAGE_MODEL, model);
+      refreshKeyStatus();
+      settingsPanel.classList.remove('open');
+      addMessage('system', 'Settings saved · model: ' + model);
+    });
+
+    suggestionsEl.addEventListener('click', (e)=>{
+      const chip = e.target.closest('.ai-chip');
+      if(!chip) return;
+      inputEl.value = chip.dataset.q;
+      sendMessage();
+    });
+
+    async function sendMessage(){
+      const text = inputEl.value.trim();
+      if(!text) return;
+      const key = getKey();
+      if(!key){
+        addMessage('system', 'Please add your Groq API key in settings (⚙) before chatting.');
+        settingsPanel.classList.add('open');
+        return;
+      }
+      addMessage('user', text);
+      conversation.push({role:'user', content:text});
+      inputEl.value = '';
+      sendBtn.disabled = true;
+      const typingEl = addTyping();
+
+      try {
+        const res = await fetch(GROQ_ENDPOINT, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + key
+          },
+          body: JSON.stringify({
+            model: getModel(),
+            messages: [
+              { role: 'system', content: buildSystemPrompt() },
+              ...conversation.slice(-10)
+            ],
+            temperature: 0.4,
+            max_tokens: 600
+          })
+        });
+
+        if(!res.ok){
+          const errBody = await res.text();
+          throw new Error('Groq API error ' + res.status + ': ' + errBody.slice(0,200));
+        }
+
+        const data = await res.json();
+        const reply = data.choices && data.choices[0] && data.choices[0].message
+          ? data.choices[0].message.content
+          : "Sorry, I couldn't generate a reply just now.";
+
+        typingEl.remove();
+        addMessage('bot', reply);
+        conversation.push({role:'assistant', content:reply});
+      } catch(err){
+        typingEl.remove();
+        addMessage('system', '⚠ ' + (err.message || 'Something went wrong reaching Groq. Check your API key and model in settings.'));
+      } finally {
+        sendBtn.disabled = false;
+        inputEl.focus();
+      }
+    }
+
+    sendBtn.addEventListener('click', sendMessage);
+    inputEl.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') sendMessage(); });
+
+    refreshKeyStatus();
   })();
 
   </script>
